@@ -1,13 +1,16 @@
 package handlers
 
 import (
-	"awesomeKonstru/backend/models"
 	"fmt"
 	"gorm.io/gorm"
 )
 
-func MakeMigrations(db *gorm.DB) error {
-	if err := db.AutoMigrate(&models.Usuario{}, &models.Insumo{}, &models.Actividad{}, &models.ActividadInsumo{}); err != nil {
+type Migration interface {
+	Migrate() error
+}
+
+func MakeMigrations(db *gorm.DB, models []interface{}) error {
+	if err := db.AutoMigrate(models...); err != nil {
 		return fmt.Errorf("error al realizar las migraciones: %v", err)
 	}
 	return nil
