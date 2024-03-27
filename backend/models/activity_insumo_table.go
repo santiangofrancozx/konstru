@@ -1,7 +1,7 @@
 package models
 
 type ActividadInsumo struct {
-	ActividadID uint `gorm:"primaryKey"`
-	InsumoID    uint `gorm:"primaryKey"`
-	Cantidad    int
+	ActividadID string `gorm:"primaryKey;not null"`
+	InsumoID    string `gorm:"primaryKey;not null"`
+	Cantidad    float64
 }

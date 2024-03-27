@@ -26,9 +26,21 @@ func ExecuteMigrations(DSN string) {
 
 }
 
+func ImportDataFromCSVDB(DSN string) {
+	CSV := "CSV-DB/insumoActividad.csv"
+	CSV2 := "CSV-DB/actividades.csv"
+	CSV3 := "CSV-DB/insumos.csv"
+	// migra los archivos csv a la db, si ya se ejecuto una vez no es necesario mas no manda error solo no los
+	//ingresa ya que se genera dulicidad de pk, estos se ejecutan solo en modo development.
+	handlers.SaveCSVInInsumo(DSN, CSV3)
+	handlers.SaveCSVInTableInsumoActividad(DSN, CSV)
+	handlers.SaveCSVInActividad(DSN, CSV2)
+}
+
 func main() {
 	DSN := "" // Define aqui tu DSN para desarrollo en local
 	// strutura de DSN user:password@tcp(127.0.0.1:3306)/?charset=utf8mb4&parseTime=True&loc=Local
 	//cambia user por tu usuario de MySql y password por tu contrasenia de acceso a el puerto, por defecto uso 3306
-	ExecuteMigrations(DSN)
+	ExecuteMigrations(DSN) // ejecut las migraciones crea la db si no existe y las tablas en esta si no existen
+	ImportDataFromCSVDB(DSN)
 }
