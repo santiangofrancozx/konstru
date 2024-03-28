@@ -1,7 +1,7 @@
 package Query
 
 import (
-	"awesomeKonstru/backend/handlers"
+	"awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"gorm.io/gorm"
 )
@@ -15,11 +15,11 @@ func QueryInsumoByID(db *gorm.DB, id string) (models.Insumo, error) {
 }
 
 func SelectInsumoByID(dsn string, id string) (models.Insumo, error) {
-	db, err := handlers.Connect(dsn)
+	db, err := Connection_Migrates.Connect(dsn)
 	if err != nil {
 		return models.Insumo{}, err
 	}
-	defer handlers.Disconnect(db)
+	defer Connection_Migrates.Disconnect(db)
 
 	return QueryInsumoByID(db, id)
 }

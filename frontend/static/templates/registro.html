@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Formulario Registro</title>
+    <link rel="stylesheet" href="static/styleRegister.css" />
+  </head>
+  <body>
+    <section class="form-register">
+      <form action="/registerPost" method="post">
+        <h4>Formulario de Registro</h4>
+        <input
+          class="controls"
+          type="text"
+          name="nombres"
+          id="nombres"
+          placeholder="Ingrese su Nombre"
+        />
+        <input
+          class="controls"
+          type="text"
+          name="apellidos"
+          id="apellidos"
+          placeholder="Ingrese su Apellido"
+        />
+        <input
+          class="controls"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Ingrese su Email"
+        />
+        <input
+          class="controls"
+          type="password"
+          name="pass"
+          id="pass"
+          placeholder="Ingrese su Contraseña"
+        />
+        <br /><br />
+        <input class="botons" type="submit" value="Registrar" />
+        <br />
+        <p><a href="/login">Ya tengo Cuenta?</a></p>
+      </form>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(img/fondo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: -100px;
+}
+
+.form-login{
+    width: 400px;
+    background: #24303c;
+    padding: 30px;
+    margin: auto;
+    margin-top: 150px;
+    border-radius: 4px;
+    font-family: 'calibri';
+    color: white;
+    box-shadow: 7px 13px 37px #000;
+}
+
+.form-login h4{
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+.form-login a{
+    color: white;
+    text-decoration: none;
+}
+
+.form-login a:hover{
+    color: white;
+    text-decoration: underline;
+}
+
+
+.controlsLogin {
+    width: 100%;
+    background: #24303c;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    border: 1px solid #1f53c5;
+    font-family: 'calibri';
+    color: white;
+    font-size: 18px;
+}
+
+.form-login p{
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+}
+
+
+.form-login .botonsLogin{
+    width: 100%;
+    background: #1f53c5;
+    border: none;
+    padding: 12px;
+    color: white;
+    margin: 16px 0;
+    font-size: 16px;
+}
+
+.form-login .imageLogin{
+    border: none;
+    margin: 16px 0;
+    margin-left: 100px;
+}
+
+/* Media queries para hacer el formulario responsive */
+@media screen and (max-width: 480px) {
+    .form-login {
+        width: 95%; /* Se ajustará al 95% del ancho de la pantalla en dispositivos móviles más pequeños */
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .form-login {
+        width: 90%; /* Se ajustará al 100% del ancho de la pantalla en dispositivos móviles aún más pequeños */
+        
+    }
+
+}
