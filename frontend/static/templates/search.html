@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de GO</title>
+    <link rel="stylesheet" type="text/css" href="static/styleSearch.css">
+    <script src="../QueryInsumo.js"></script>
+</head>
+<body>
+
+<h2>Consulta de GO</h2>
+
+<form id="consultaForm">
+    <label for="codigo">Código:</label>
+    <input type="text" id="codigo" name="codigo">
+    <button type="button" onclick="realizarConsulta()">Buscar</button>
+</form>
+
+<div id="resultado">
+    <h3>Resultados:</h3>
+    <table id="tablaResultados">
+        <thead>
+        <tr>
+            <th>Columna 1</th>
+            <th>Columna 2</th>
+            <th>Columna 3</th>
+            <th>Columna 4</th>
+            <th>Columna 5</th>
+            <th>Columna 6</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Los resultados se insertarán aquí dinámicamente -->
+        </tbody>
+    </table>
+</div>
+<script src="./static/QueryInsumo.js"></script>
+</body>
+</html>
+

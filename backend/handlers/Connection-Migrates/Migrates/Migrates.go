@@ -1,7 +1,8 @@
-package Connection_Migrates
+package Migrates
 
 import (
 	"awesomeKonstru/backend/handlers/CSV-upload"
+	"awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"fmt"
 	"gorm.io/gorm"
@@ -19,7 +20,7 @@ func MakeMigrations(db *gorm.DB, models []interface{}) error {
 }
 func ExecuteMigrations(DSN string) {
 	//connect to db Konstru
-	db, err := Connect(DSN)
+	db, err := Connection_Migrates.Connect(DSN)
 	if err != nil {
 		return
 	}
@@ -35,7 +36,7 @@ func ExecuteMigrations(DSN string) {
 		return
 	}
 	//Disconnect to db
-	Disconnect(db)
+	Connection_Migrates.Disconnect(db)
 
 }
 

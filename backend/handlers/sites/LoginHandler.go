@@ -1,4 +1,4 @@
-package routes
+package sites
 
 import (
 	"github.com/gin-gonic/gin"
@@ -15,7 +15,7 @@ func LoginHandler(c *gin.Context) {
 	}
 
 	// Parsear el archivo de template
-	tmpl, err := template.ParseFiles("./frontend/static/templates/login.html")
+	tmpl, err := template.ParseFiles("../frontend/static/templates/login.html")
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())

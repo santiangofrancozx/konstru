@@ -1,6 +1,7 @@
 package main
 
 import (
+	"awesomeKonstru/backend/config"
 	"awesomeKonstru/backend/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -13,11 +14,14 @@ func main() {
 	//handlers.ImportDataFromCSVDB(DSN)
 
 	// Inicializar Gin
+	config.SetDSN("")
 	router := gin.Default()
+	gin.SetMode(gin.DebugMode) // o gin.ReleaseMode
+	router.Static("/static", "../frontend/static")
 
 	// Configurar las rutas
 	routes.SetUpRoutes(router)
 
 	// Iniciar el servidor
-	router.Run(":8080")
+	router.Run(":8082")
 }
