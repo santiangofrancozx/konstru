@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de GO</title>
-    <link rel="stylesheet" type="text/css" href="static/styleSearch.css">
+    <link rel="stylesheet" type="text/css" href="static/style/styleSearch.css">
 </head>
 <body>
 
@@ -14,10 +14,9 @@
     <form id="consultaForm">
         <label for="codigo">Item:</label>
         <input type="text" id="codigo" name="codigo">
-        <label for="tipoBusqueda">Tipo de búsqueda:</label>
-        <select id="tipoBusqueda" name="tipoBusqueda">
-            <option value="nombre">Nombre</option>
-            <option value="codigo">Codigo</option>
+        <select id="tipoItem" name="tipoItem">
+            <option value="insumo">Insumo</option>
+            <option value="actividad">Actividad</option>
         </select>
         <button type="button" onclick="realizarConsulta()">Buscar</button>
     </form>
@@ -41,6 +40,6 @@
         </table>
     </div>
 </div>
-<script src="./static/QueryInsumo.js"></script>
+<script src="./static/JS/QueryInsumo.js"></script>
 </body>
 </html>

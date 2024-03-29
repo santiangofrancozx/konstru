@@ -13,6 +13,13 @@ func QueryActivityByID(db *gorm.DB, id string) (models.Actividad, error) {
 	}
 	return item, nil
 }
+func QueryActividadByNombre(db *gorm.DB, nombre string) ([]models.Actividad, error) {
+	var items []models.Actividad
+	if err := db.Where("descripcion LIKE ?", "%"+nombre+"%").Find(&items).Error; err != nil {
+		return nil, err
+	}
+	return items, nil
+}
 
 func SelectActivityByID(dsn string, id string) (models.Actividad, error) {
 	db, err := Connection_Migrates.Connect(dsn)
@@ -22,4 +29,13 @@ func SelectActivityByID(dsn string, id string) (models.Actividad, error) {
 	defer Connection_Migrates.Disconnect(db)
 
 	return QueryActivityByID(db, id)
+}
+func SelectActividadByNombre(dsn string, name string) ([]models.Actividad, error) {
+	db, err := Connection_Migrates.Connect(dsn)
+	if err != nil {
+		return nil, err
+	}
+	defer Connection_Migrates.Disconnect(db)
+
+	return QueryActividadByNombre(db, name)
 }
