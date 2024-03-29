@@ -1,6 +1,8 @@
-package handlers
+package Migrates
 
 import (
+	"awesomeKonstru/backend/handlers/CSV-upload"
+	"awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"fmt"
 	"gorm.io/gorm"
@@ -18,7 +20,7 @@ func MakeMigrations(db *gorm.DB, models []interface{}) error {
 }
 func ExecuteMigrations(DSN string) {
 	//connect to db Konstru
-	db, err := Connect(DSN)
+	db, err := Connection_Migrates.Connect(DSN)
 	if err != nil {
 		return
 	}
@@ -34,7 +36,7 @@ func ExecuteMigrations(DSN string) {
 		return
 	}
 	//Disconnect to db
-	Disconnect(db)
+	Connection_Migrates.Disconnect(db)
 
 }
 
@@ -44,7 +46,7 @@ func ImportDataFromCSVDB(DSN string) {
 	CSV3 := "CSV-DB/insumos.csv"
 	// migra los archivos csv a la db, si ya se ejecuto una vez no es necesario mas no manda error solo no los
 	//ingresa ya que se genera dulicidad de pk, estos se ejecutan solo en modo development.
-	SaveCSVInInsumo(DSN, CSV3)
-	SaveCSVInTableInsumoActividad(DSN, CSV)
-	SaveCSVInActividad(DSN, CSV2)
+	CSV_upload.SaveCSVInInsumo(DSN, CSV3)
+	CSV_upload.SaveCSVInTableInsumoActividad(DSN, CSV)
+	CSV_upload.SaveCSVInActividad(DSN, CSV2)
 }

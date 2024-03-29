@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="static/styleLogin.css" />
+  </head>
+  <body>
+    <section class="form-login">
+      <form action="/validarLogin" method="post">
+        <h4>Login</h4>
+        <input
+          class="controlsLogin"
+          type="email"
+          name="emailLogin"
+          id="emailLogin"
+          placeholder="Ingrese su Email"
+        />
+        <input
+          class="controlsLogin"
+          type="password"
+          name="passLogin"
+          id="passLogin"
+          placeholder="Ingrese su Contraseña"
+        />
+        <input
+          class="imageLogin"
+          type="image"
+          name="google"
+          id="google"
+          src="static/img/iconGoogle.png"
+        />
+        <br /><br />
+        <input class="botonsLogin" type="submit" value="Ingresar" />
+        <br />
+        <p><a href="/register">No tienes una cuenta?</a></p>
+      </form>
+    </section>
+  </body>
+</html>

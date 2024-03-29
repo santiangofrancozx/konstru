@@ -1,6 +1,7 @@
-package handlers
+package CSV_upload
 
 import (
+	"awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"encoding/csv"
 	"fmt"
@@ -11,7 +12,7 @@ import (
 
 func SaveCSVInInsumo(DSN string, route string) {
 	// Conectar a la base de datos MySQL
-	db, err := Connect(DSN)
+	db, err := Connection_Migrates.Connect(DSN)
 	if err != nil {
 		panic("Failed to conect databse")
 	}
@@ -58,6 +59,6 @@ func SaveCSVInInsumo(DSN string, route string) {
 		// Guardar el usuario en la base de datos
 		db.Create(&insert)
 	}
-	Disconnect(db)
+	Connection_Migrates.Disconnect(db)
 	fmt.Println("CSV data successfully loaded into the database")
 }
