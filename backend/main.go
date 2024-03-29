@@ -14,7 +14,7 @@ func main() {
 	//handlers.ImportDataFromCSVDB(DSN)
 
 	// Inicializar Gin
-	config.SetDSN("")
+	config.SetDSN("root:safraroot@tcp(127.0.0.1:3306)/?charset=utf8mb4&parseTime=True&loc=Local")
 	router := gin.Default()
 	gin.SetMode(gin.DebugMode) // o gin.ReleaseMode
 	router.Static("/static", "../frontend/static")
