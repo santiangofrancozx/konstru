@@ -1,44 +1,151 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de GO</title>
-    <link rel="stylesheet" type="text/css" href="static/style/styleSearch.css">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <style>
+        /* CSS adicional para los cambios */
+        @media (max-width: 768px) {
+            .flexible-container {
+                flex-direction: column;
+            }
+        }
+        /* Estilos adicionales */
+        .bg-background {
+            background-color: #f5f8fa;
+        }
+
+        .bg-card {
+            background-color: #eaeff4;
+        }
+
+        .text-card-foreground {
+            color: #32485a;
+        }
+
+        .text-muted-foreground {
+            color: #32485a;
+        }
+
+        .text-primary-foreground {
+            color: #ffffff;
+        }
+
+        .bg-primary {
+            background-color: #59819e;
+        }
+
+    </style>
 </head>
 <body>
+<!--
+// v0 by Vercel.
+// https://v0.dev/t/nxO9m6CwG7Z
+-->
 
-<div class="container">
-    <h2>Consulta de GO</h2>
+<div class="flex flex-col h-screen w-full">
+    <header class="border-b bg-white py-4 dark:bg-gray-950 dark:border-gray-850">
+        <div class="container flex items-center gap-4 px-4 md:px-6">
+            <div class="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <h1 class="text-lg font-semibold tracking-tight">
+                    Construction Budget Generator
+                </h1>
+            </div>
+            <div class="ml-auto flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                        New Item
+                    </button>
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                        New Activity
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="flex-1 overflow-y-auto">
+        <div class="container flex gap-4 p-4 md:p-6 flexible-container">
+            <div class="w-full flex flex-col gap-4">
+                <form id="consultaForm">
+                    <div class="p-6">
+                        <div class="flex items-center gap-4">
+                            <label for="codigo">Activity:</label>
+                            <input type="text" id="codigo"
+                                   class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full flex-1"
+                                   placeholder="Search for items..."
+                                   onkeypress="return event.keyCode != 13;"
+                                   onkeyup="if(event.keyCode == 13) realizarConsulta();">
+                            <button type="button" onclick="realizarConsulta()"
+                                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="h-4 w-4">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.3-4.3"></path>
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="flex flex-col">
+                    <div class="max-h-screen overflow-y-auto">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="cards">
+                            <!-- Aquí van las tarjetas -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex flex-col gap-4">
+                <div class="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+                    <div class="space-y-1.5 p-6 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                        <div class="grid gap-1">
+                            <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-primary-foreground">Budget Table</h3>
+                            <p class="text-sm text-muted-foreground">
+                                Enter the estimated costs for each item.
+                            </p>
+                        </div>
+                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                            Export
+                        </button>
+                    </div>
+                    <div class="p-0">
+                        <div class="overflow-x-auto w-full max-h-screen overflow-y-auto">
+                            <table class="table-auto border-collapse">
+                                <thead class="[&amp;_tr]:border-b">
+                                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                                        Item
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[100px]">
+                                        Quantity
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[120px]">
+                                        Unit price
+                                    </th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[150px]">
+                                        Total
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="budget">
 
-    <form id="consultaForm">
-        <label for="codigo">Item:</label>
-        <input type="text" id="codigo" name="codigo">
-        <select id="tipoItem" name="tipoItem">
-            <option value="insumo">Insumo</option>
-            <option value="actividad">Actividad</option>
-        </select>
-        <button type="button" onclick="realizarConsulta()">Buscar</button>
-    </form>
-
-    <div id="resultado">
-        <h3>Resultados:</h3>
-        <table id="tablaResultados">
-            <thead>
-            <tr>
-                <th>Columna 1</th>
-                <th>Columna 2</th>
-                <th>Columna 3</th>
-                <th>Columna 4</th>
-                <th>Columna 5</th>
-                <th>Columna 6</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Los resultados se insertarán aquí dinámicamente -->
-            </tbody>
-        </table>
-    </div>
+                                </tbody>
+                                <!-- Resto de tu tabla -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
 <script src="./static/JS/QueryInsumo.js"></script>
 </body>

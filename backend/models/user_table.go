@@ -5,7 +5,7 @@ type Usuario struct {
 	ID            uint   `gorm:"primaryKey;autoIncrement"`
 	Nombre        string `gorm:"size:50"`
 	Apellido      string `gorm:"size:50"`
-	Email         string `gorm:"size:100"`
+	Email         string `gorm:"size:100;index"`
 	Contraseña    string `gorm:"size:100"`
 	FechaCreacion string `gorm:"type:datetime"`
 }

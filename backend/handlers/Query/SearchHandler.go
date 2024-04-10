@@ -8,17 +8,18 @@ import (
 
 func QueryHandler(DSN string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		id := c.Query("codigo")
-		item := c.Query("tipoItem")
-
-		switch item {
-		case "insumo":
-			handleInsumoQuery(c, DSN, id)
-		case "actividad":
-			handleActividadQuery(c, DSN, id)
-		default:
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid item type"})
+		var requestData struct {
+			ID string `json:"id"`
 		}
+
+		// Bind JSON a la estructura requestData
+		if err := c.BindJSON(&requestData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		handleActividadQuery(c, DSN, requestData.ID)
+		//handleInsumoQuery(c, DSN, requestData.ID)
+
 	}
 }
 

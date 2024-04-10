@@ -8,5 +8,5 @@ type Insumo struct {
 	Unidad             string    `gorm:"size:20"`
 	PrecioBase         float64   `gorm:"type:decimal(10,2)"`
 	FechaActualizacion time.Time `gorm:"type:datetime"`
-	Clasificacion      string    `gorm:"size:50"`
+	Clasificacion      string    `gorm:"size:50;index"`
 }
