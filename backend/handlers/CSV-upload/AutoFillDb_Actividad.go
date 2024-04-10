@@ -45,7 +45,7 @@ func SaveCSVInActividad(DSN string, route string) {
 			ID:            record[0],
 			Descripcion:   record[1],
 			Unidad:        record[2],
-			ValorTotal:    quantity,
+			PrecioBase:    quantity,
 			FechaCreacion: "2022-03-25",
 		}
 		// Guardar el usuario en la base de datos

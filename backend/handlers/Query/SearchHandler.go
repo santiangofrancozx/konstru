@@ -3,37 +3,76 @@ package Query
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 func QueryHandler(DSN string) gin.HandlerFunc {
-	// Suponiendo que el ID del insumo proviene de la URL como un parámetr
 	return func(c *gin.Context) {
-		// Suponiendo que el ID del insumo proviene de la URL como un parámetro
-		id := c.Query("codigo")
-		table := c.Query("tipoBusqueda")
-
-		if table == "codigo" {
-			// Realizar la consulta del insumo por su ID utilizando la lógica definida en el paquete Query
-			insumo, err := SelectInsumoByID(DSN, id)
-			if err != nil {
-				// Manejar el error devolviendo un mensaje de error JSON
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-			//Devolver los datos del insumo como JSON
-			c.JSON(http.StatusOK, insumo)
-
-		} else if table == "nombre" {
-			// Realizar la consulta del insumo por su descripcion/nombre utilizando la lógica definida en el paquete Query
-			insumos, err := SelectInsumoByNombre(DSN, id)
-			if err != nil {
-				// Manejar el error devolviendo un mensaje de error JSON
-				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-				return
-			}
-			//Devolver los datos de los insumos como JSON
-			c.JSON(http.StatusOK, insumos)
+		var requestData struct {
+			ID string `json:"id"`
 		}
 
+		// Bind JSON a la estructura requestData
+		if err := c.BindJSON(&requestData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		handleActividadQuery(c, DSN, requestData.ID)
+		//handleInsumoQuery(c, DSN, requestData.ID)
+
 	}
+}
+
+func handleInsumoQuery(c *gin.Context, DSN, id string) {
+	_, err := strconv.ParseInt(id, 10, 64)
+	if err == nil {
+		handleInsumoByID(c, DSN, id)
+	} else {
+		handleInsumoByNombre(c, DSN, id)
+	}
+}
+
+func handleActividadQuery(c *gin.Context, DSN, id string) {
+	_, err := strconv.ParseInt(id, 10, 64)
+	if err == nil {
+		handleActividadByID(c, DSN, id)
+	} else {
+		handleActividadByNombre(c, DSN, id)
+	}
+}
+
+func handleInsumoByID(c *gin.Context, DSN, id string) {
+	insumo, err := SelectInsumoByID(DSN, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, insumo)
+}
+
+func handleInsumoByNombre(c *gin.Context, DSN, id string) {
+	insumos, err := SelectInsumoByNombre(DSN, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, insumos)
+}
+
+func handleActividadByID(c *gin.Context, DSN, id string) {
+	actividad, err := SelectActivityByID(DSN, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, actividad)
+}
+
+func handleActividadByNombre(c *gin.Context, DSN, id string) {
+	actividades, err := SelectActividadByNombre(DSN, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, actividades)
 }

@@ -15,6 +15,7 @@ func SetUpRoutes(router *gin.Engine) {
 	r.GET("/login", sites.LoginHandler)
 	r.GET("/search", sites.SearchRenderHandler)
 	r.GET("/consulta", Query.QueryHandler(config.DB_DSN))
+	r.POST("/consulta", Query.QueryHandler(config.DB_DSN))
 	//r.GET("/register", RegisterHandler)
 
 	//POST
