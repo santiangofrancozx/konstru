@@ -1,5 +1,5 @@
 function realizarConsulta() {
-    const url = `/consulta`;
+    const url = `/consultaActividad`;
     const  id = document.getElementById('codigo').value
     fetch(url, {
         method: 'POST',
@@ -12,9 +12,8 @@ function realizarConsulta() {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            console.table(data)
             mostrarResultados(data);
-            // generateCard(data);
         })
         .catch(error => console.error('Error:', error));
 }
@@ -26,15 +25,9 @@ function mostrarResultados(data) {
     // Limpiar todas las tarjetas existentes
     cardsContainer.innerHTML = '';
     // Verificar si data es un objeto o una lista
-    if (Array.isArray(data)) {
-        // Si data es una lista de objetos
-        data.forEach(item => {
-            generateCard(item); // Llama a la función para crear una tarjeta con los datos del item
-        });
-    } else {
-        // Si data es un solo objeto
-        generateCard(data); // Llama a la función para crear una tarjeta con los datos
-    }
+    data.forEach(item => {
+        generateCard(item); // Llama a la función para crear una tarjeta con los datos del item
+    });
 }
 
 

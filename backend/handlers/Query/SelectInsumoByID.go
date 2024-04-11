@@ -8,7 +8,7 @@ import (
 
 func QueryInsumoByID(db *gorm.DB, id string) (models.Insumo, error) {
 	item := models.Insumo{}
-	if err := db.First(&item, id).Error; err != nil {
+	if err := db.First(&item, "id = ?", id).Error; err != nil {
 		return models.Insumo{}, err
 	}
 	return item, nil

@@ -2,7 +2,7 @@ package routes
 
 import (
 	"awesomeKonstru/backend/config"
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Query/Microservices"
 	"awesomeKonstru/backend/handlers/sites"
 	"github.com/gin-gonic/gin"
 )
@@ -14,8 +14,7 @@ func SetUpRoutes(router *gin.Engine) {
 	//r.GET("/", handler)
 	r.GET("/login", sites.LoginHandler)
 	r.GET("/search", sites.SearchRenderHandler)
-	r.GET("/consulta", Query.QueryHandler(config.DB_DSN))
-	r.POST("/consulta", Query.QueryHandler(config.DB_DSN))
+	r.POST("/consultaActividad", Microservices.HandleActivityInsumo(config.DB_DSN))
 	//r.GET("/register", RegisterHandler)
 
 	//POST

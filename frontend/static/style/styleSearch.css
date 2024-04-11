@@ -1,0 +1,30 @@
+/* CSS adicional para los cambios */
+@media (max-width: 768px) {
+    .flexible-container {
+        flex-direction: column;
+    }
+}
+/* Estilos adicionales */
+.bg-background {
+    background-color: #f5f8fa;
+}
+
+.bg-card {
+    background-color: #eaeff4;
+}
+
+.text-card-foreground {
+    color: #32485a;
+}
+
+.text-muted-foreground {
+    color: #32485a;
+}
+
+.text-primary-foreground {
+    color: #ffffff;
+}
+
+.bg-primary {
+    background-color: #59819e;
+}
