@@ -17,7 +17,7 @@ func SaveCSVInActividad(DSN string, route string) {
 	}
 
 	// Migrar el esquema si no se ha hecho
-	db.AutoMigrate(&models.ActividadInsumo{})
+	//db.AutoMigrate(&models.ActividadInsumo{})
 
 	// Abrir archivo CSV
 	file, err := os.Open(route)

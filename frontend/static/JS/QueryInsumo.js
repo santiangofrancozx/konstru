@@ -1,20 +1,16 @@
 function realizarConsulta() {
-    const url = `/consulta`;
-    const  id = document.getElementById('codigo').value
+    const id = document.getElementById('codigo').value;
+    const url = `/consultaActividad?id=${id}`;
     fetch(url, {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "id": id
-        })
+        }
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            console.table(data.data)
             mostrarResultados(data);
-            // generateCard(data);
         })
         .catch(error => console.error('Error:', error));
 }
@@ -26,14 +22,13 @@ function mostrarResultados(data) {
     // Limpiar todas las tarjetas existentes
     cardsContainer.innerHTML = '';
     // Verificar si data es un objeto o una lista
-    if (Array.isArray(data)) {
-        // Si data es una lista de objetos
-        data.forEach(item => {
+    if (data.hasOwnProperty('data')) {
+        data.data.forEach(item => {
             generateCard(item); // Llama a la función para crear una tarjeta con los datos del item
         });
     } else {
-        // Si data es un solo objeto
-        generateCard(data); // Llama a la función para crear una tarjeta con los datos
+        // Si data no es un objeto con la propiedad 'data', asumimos que es un solo objeto
+        generateCard(data); // Llama a la función para crear una tarjeta con los datos del objeto
     }
 }
 

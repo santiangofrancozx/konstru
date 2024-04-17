@@ -15,8 +15,6 @@ func main() {
 	//handlers.ExecuteMigrations(config.DB_DSN) // ejecut las migraciones crea la db si no existe y las tablas en esta si no existen
 	//handlers.ImportDataFromCSVDB(config.DB_DSN)
 
-	// Inicializar Gin
-
 	router := gin.Default()
 	gin.SetMode(gin.DebugMode) // o gin.ReleaseMode
 	router.Static("/static", "../frontend/static")

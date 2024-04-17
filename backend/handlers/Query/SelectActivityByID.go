@@ -8,7 +8,7 @@ import (
 
 func QueryActivityByID(db *gorm.DB, id string) (models.Actividad, error) {
 	item := models.Actividad{}
-	if err := db.First(&item, id).Error; err != nil {
+	if err := db.First(&item, "id = ?", id).Error; err != nil {
 		return models.Actividad{}, err
 	}
 	return item, nil
