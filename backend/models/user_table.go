@@ -5,11 +5,12 @@ import (
 )
 
 // Usuario representa la estructura del modelo Usuario
+
 type Usuario struct {
-	ID            uint   `gorm:"primaryKey;autoIncrement"`
+	ID            int    `gorm:"primaryKey;autoIncrement"`
 	Nombre        string `gorm:"size:50"`
 	Apellido      string `gorm:"size:50"`
 	Email         string `gorm:"size:100;index"`
-	password      string `gorm:"size:100"`
+	Password      string `gorm:"size:100"` // Corregido a Password con P mayúscula
 	FechaCreacion string `gorm:"type:datetime"`
 }

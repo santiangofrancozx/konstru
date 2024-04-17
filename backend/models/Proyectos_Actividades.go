@@ -1,8 +1,9 @@
 package models
 
 type Proyectos_actividades struct {
-	ID_proyecto  string
-	ID_actividad string
-	Proyectos    Proyectos
-	Actividad    Actividad
+	ID_proyecto  string `gorm:"type:longtext;size:255"`
+	ID_actividad string `gorm:"type:longtext;size:255"`
+	Cantidad     float64
+	Proyectos    Proyectos `gorm:"foreignKey:ID_proyecto"`
+	Actividad    Actividad `gorm:"foreignKey:ID_actividad"`
 }

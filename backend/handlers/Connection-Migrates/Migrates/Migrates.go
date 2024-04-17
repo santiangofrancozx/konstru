@@ -2,11 +2,25 @@ package Migrates
 
 import (
 	CSV_upload "awesomeKonstru/backend/handlers/CSV-upload"
+	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
+	"fmt"
 )
 
 type Migration interface {
 	Migrate() error
+}
+
+func MakeMigrations(DSN string, models []interface{}) error {
+	db, err := Connection_Migrates.Connect(DSN)
+	if err != nil {
+		return nil
+	}
+	if err := db.AutoMigrate(models...); err != nil {
+		return fmt.Errorf("error al realizar las migraciones: %v", err)
+	}
+	Connection_Migrates.Disconnect(db)
+	return nil
 }
 
 func ExecuteMigrations() []interface{} {
@@ -21,6 +35,7 @@ func ExecuteMigrations() []interface{} {
 	modelsToMigrate = append(modelsToMigrate, &models.Actividad_Usuario{})
 	modelsToMigrate = append(modelsToMigrate, &models.ActividadU_InsumoU{})
 	modelsToMigrate = append(modelsToMigrate, &models.Proyectos{})
+	modelsToMigrate = append(modelsToMigrate, &models.Proyectos_actividades{})
 
 	return modelsToMigrate
 
