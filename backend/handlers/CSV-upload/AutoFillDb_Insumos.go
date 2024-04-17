@@ -18,7 +18,7 @@ func SaveCSVInInsumo(DSN string, route string) {
 	}
 
 	// Migrar el esquema si no se ha hecho
-	db.AutoMigrate(&models.Insumo{})
+	//db.AutoMigrate(&models.Insumo{})
 
 	// Abrir archivo CSV
 	file, err := os.Open(route)
