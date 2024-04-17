@@ -5,8 +5,8 @@ import (
 )
 
 type Actividad_Usuario struct {
-	ID_Actividad_Usuario string  `gorm:"primaryKey;not null;index"`
-	Usuario_ID           string  `gorm:"type:longtext;size:255"`
+	ID_Actividad_Usuario string `gorm:"primaryKey;not null;index"`
+	Usuario_ID           int
 	Descripcion          string  `gorm:"size:100;index"`
 	Unidad               string  `gorm:"size:20;not null"`
 	PrecioBase           float64 `gorm:"type:decimal(10,2)"`

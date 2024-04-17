@@ -5,8 +5,8 @@ import (
 )
 
 type Insumos_Usuario struct {
-	ID_Insumo_Usuario string  `gorm:"type:longtext;size:255"`
-	Usuario_ID        string  `gorm:"type:longtext;size:255"`
+	ID_Insumo_Usuario string `gorm:"primaryKey;type:varchar(255)"`
+	Usuario_ID        int
 	Descripcion       string  `gorm:"size:100;index"`
 	Unidad            string  `gorm:"size:20;not null"`
 	PrecioBase        float64 `gorm:"type:decimal(10,2)"`
