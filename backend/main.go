@@ -2,7 +2,6 @@ package main
 
 import (
 	"awesomeKonstru/backend/config"
-	handlers "awesomeKonstru/backend/handlers/Connection-Migrates/Migrates"
 	"awesomeKonstru/backend/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +12,7 @@ func main() {
 	config.SetDSN("root:safraroot@tcp(127.0.0.1:3306)/?charset=utf8mb4&parseTime=True&loc=Local")
 	//cambia user por tu usuario de MySql y password por tu contrasenia de acceso a el puerto, por defecto uso 3306
 	//handlers.MakeMigrations(config.DB_DSN, handlers.ExecuteMigrations()) // ejecut las migraciones crea la db si no existe y las tablas en esta si no existe
-	handlers.ImportDataFromCSVDB(config.DB_DSN)
+	//handlers.ImportDataFromCSVDB(config.DB_DSN)
 
 	router := gin.Default()
 	gin.SetMode(gin.DebugMode) // o gin.ReleaseMode

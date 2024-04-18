@@ -7,6 +7,7 @@ import (
 )
 
 func GetActivityByNameService(DSN string) gin.HandlerFunc {
+	//DSN := config.DB_DSN
 	return func(context *gin.Context) {
 		c := context
 
