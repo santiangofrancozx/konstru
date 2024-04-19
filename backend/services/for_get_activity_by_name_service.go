@@ -6,14 +6,14 @@ import (
 	"net/http"
 )
 
-func GetActivityByNameService(DSN string) gin.HandlerFunc {
+func GetActivityByNameService() gin.HandlerFunc {
 	//DSN := config.DB_DSN
 	return func(context *gin.Context) {
 		c := context
 
 		ID := c.Query("id")
 
-		actividades, err := Query.SelectActividadByNombre(DSN, ID)
+		actividades, err := Query.SelectActividadByNombre(ID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

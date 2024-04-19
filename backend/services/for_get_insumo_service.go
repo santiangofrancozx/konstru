@@ -6,14 +6,14 @@ import (
 	"net/http"
 )
 
-func GetInsumoService(DSN string) gin.HandlerFunc {
+func GetInsumoService() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		ID := c.Query("id")
 
-		insumo, _ := Query.SelectInsumoByID(DSN, ID)
+		insumo, _ := Query.SelectInsumoByID(ID)
 
-		insumos, err := Query.SelectInsumoByNombre(DSN, ID)
+		insumos, err := Query.SelectInsumoByNombre(ID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al buscar las actividades por nombre"})
 			return

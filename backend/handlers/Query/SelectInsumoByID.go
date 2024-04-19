@@ -22,8 +22,8 @@ func QueryInsumoByNombre(db *gorm.DB, nombre string) ([]models.Insumo, error) {
 	return items, nil
 }
 
-func SelectInsumoByID(dsn string, id string) (models.Insumo, error) {
-	db, err := Connection_Migrates.Connect(dsn)
+func SelectInsumoByID(id string) (models.Insumo, error) {
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return models.Insumo{}, err
 	}
@@ -32,8 +32,8 @@ func SelectInsumoByID(dsn string, id string) (models.Insumo, error) {
 	return QueryInsumoByID(db, id)
 }
 
-func SelectInsumoByNombre(dsn string, name string) ([]models.Insumo, error) {
-	db, err := Connection_Migrates.Connect(dsn)
+func SelectInsumoByNombre(name string) ([]models.Insumo, error) {
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return nil, err
 	}

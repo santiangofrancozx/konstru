@@ -9,9 +9,9 @@ import (
 	"strconv"
 )
 
-func SaveCSVInActividad(DSN string, route string) {
+func SaveCSVInActividad(route string) {
 	// Conectar a la base de datos MySQL
-	db, err := Connection_Migrates.Connect(DSN)
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		panic("Failed to conect databse")
 	}

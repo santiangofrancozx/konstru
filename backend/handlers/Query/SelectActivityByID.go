@@ -21,8 +21,8 @@ func QueryActividadByNombre(db *gorm.DB, nombre string) ([]models.Actividad, err
 	return items, nil
 }
 
-func SelectActivityByID(dsn string, id string) (models.Actividad, error) {
-	db, err := Connection_Migrates.Connect(dsn)
+func SelectActivityByID(id string) (models.Actividad, error) {
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return models.Actividad{}, err
 	}
@@ -30,8 +30,8 @@ func SelectActivityByID(dsn string, id string) (models.Actividad, error) {
 
 	return QueryActivityByID(db, id)
 }
-func SelectActividadByNombre(dsn string, name string) ([]models.Actividad, error) {
-	db, err := Connection_Migrates.Connect(dsn)
+func SelectActividadByNombre(name string) ([]models.Actividad, error) {
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return nil, err
 	}

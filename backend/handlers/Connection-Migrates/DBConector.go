@@ -1,12 +1,14 @@
 package Connection_Migrates
 
 import (
+	"awesomeKonstru/backend/config"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-func CreateDatabaseIfNotExists(dsn string) error {
+func CreateDatabaseIfNotExists() error {
+	dsn := config.DB_DSN
 	// Abrir una conexión temporal sin seleccionar ninguna base de datos
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -23,14 +25,15 @@ func CreateDatabaseIfNotExists(dsn string) error {
 	return nil
 }
 
-func Connect(dsn string) (*gorm.DB, error) {
+func Connect() (*gorm.DB, error) {
+	dsn := config.DB_DSN
 	//dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, err
 	}
 	// Crear la base de datos si no existe
-	err2 := CreateDatabaseIfNotExists(dsn)
+	err2 := CreateDatabaseIfNotExists()
 	if err2 != nil {
 		return nil, err2
 	}

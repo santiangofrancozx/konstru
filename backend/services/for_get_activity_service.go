@@ -11,14 +11,14 @@ type jsonFormat struct {
 	Data        interface{} `json:"data"`
 }
 
-func GetActivityService(DSN string) gin.HandlerFunc {
+func GetActivityService() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		ID := c.Query("id")
 
-		actividad, _ := Query.SelectActivityByID(DSN, ID)
+		actividad, _ := Query.SelectActivityByID(ID)
 
-		actividades, err := Query.SelectActividadByNombre(DSN, ID)
+		actividades, err := Query.SelectActividadByNombre(ID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al buscar las actividades por nombre"})
 			return

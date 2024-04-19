@@ -1,7 +1,6 @@
 package Query
 
 import (
-	"awesomeKonstru/backend/config"
 	"awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"gorm.io/gorm"
@@ -16,8 +15,7 @@ func QueryUserByUsername(db *gorm.DB, email string) (models.Usuario, error) {
 }
 
 func SelectUserByUsername(email string) (models.Usuario, error) {
-	dsn := config.DB_DSN
-	db, err := Connection_Migrates.Connect(dsn)
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return models.Usuario{}, err
 	}

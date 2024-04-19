@@ -10,9 +10,9 @@ import (
 	"time"
 )
 
-func SaveCSVInInsumo(DSN string, route string) {
+func SaveCSVInInsumo(route string) {
 	// Conectar a la base de datos MySQL
-	db, err := Connection_Migrates.Connect(DSN)
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		panic("Failed to conect databse")
 	}
