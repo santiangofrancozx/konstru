@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"awesomeKonstru/backend/config"
 	"awesomeKonstru/backend/middleware"
 	"awesomeKonstru/backend/services"
 	"awesomeKonstru/backend/services/sites"
@@ -15,5 +14,5 @@ func SetUpRoutes(router *gin.Engine) {
 	r.POST("/validateUser", services.ValidateLoginService())
 	// Utiliza el middleware para proteger la ruta '/search'
 	r.GET("/search", middleware.RequireAuth, sites.RenderBudgetTemplateService)
-	r.GET("/consultaActividad", middleware.RequireAuth, services.GetActivityService(config.DB_DSN))
+	r.GET("/consultaActividad", middleware.RequireAuth, services.GetActivityService())
 }
