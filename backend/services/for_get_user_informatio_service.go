@@ -11,7 +11,6 @@ func GetUserByEmailService() gin.HandlerFunc {
 		c := context
 		var requestData struct {
 			Email string `json:"email"`
-			Pass  string `json:"pass"`
 		}
 		if err := c.BindJSON(&requestData); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

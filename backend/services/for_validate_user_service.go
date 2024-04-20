@@ -11,8 +11,7 @@ import (
 )
 
 func ValidateLoginService() gin.HandlerFunc {
-	return func(context *gin.Context) {
-		c := context
+	return func(c *gin.Context) {
 		var requestData struct {
 			Email string `json:"email"`
 			Pass  string `json:"pass"`
