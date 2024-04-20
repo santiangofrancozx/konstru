@@ -39,6 +39,3 @@ func SelectActividadByNombre(name string) ([]models.Actividad, error) {
 
 	return QueryActividadByNombre(db, name)
 }
-
-type APU struct {
-}

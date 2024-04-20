@@ -15,4 +15,6 @@ func SetUpRoutes(router *gin.Engine) {
 	// Utiliza el middleware para proteger la ruta '/search'
 	r.GET("/search", middleware.RequireAuth, sites.RenderBudgetTemplateService)
 	r.GET("/consultaActividad", middleware.RequireAuth, services.GetActivityService())
+	r.GET("/consultaApu", middleware.RequireAuth, services.GetActivityApuByActiityIdService())
+
 }

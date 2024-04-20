@@ -7,8 +7,7 @@ import (
 )
 
 func GetActivityByIdService() gin.HandlerFunc {
-	return func(context *gin.Context) {
-		c := gin.Context{}
+	return func(c *gin.Context) {
 
 		ID := c.Query("id")
 
