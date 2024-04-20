@@ -11,8 +11,8 @@ type Migration interface {
 	Migrate() error
 }
 
-func MakeMigrations(DSN string, models []interface{}) error {
-	db, err := Connection_Migrates.Connect(DSN)
+func MakeMigrations(models []interface{}) error {
+	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return nil
 	}
@@ -41,13 +41,13 @@ func ExecuteMigrations() []interface{} {
 
 }
 
-func ImportDataFromCSVDB(DSN string) {
+func ImportDataFromCSVDB() {
 	// migra los archivos csv a la db, si ya se ejecuto una vez no es necesario mas no manda error solo no los
 	//ingresa ya que se genera dulicidad de pk, estos se ejecutan solo en modo development.
 	CSV3 := "CSV-DB/insumos.csv"
-	CSV_upload.SaveCSVInInsumo(DSN, CSV3)
+	CSV_upload.SaveCSVInInsumo(CSV3)
 	CSV2 := "CSV-DB/actividades.csv"
-	CSV_upload.SaveCSVInActividad(DSN, CSV2)
+	CSV_upload.SaveCSVInActividad(CSV2)
 	CSV := "CSV-DB/insumoActividad.csv"
-	CSV_upload.SaveCSVInTableInsumoActividad(DSN, CSV)
+	CSV_upload.SaveCSVInTableInsumoActividad(CSV)
 }

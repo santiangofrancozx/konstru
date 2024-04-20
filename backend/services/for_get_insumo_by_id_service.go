@@ -6,11 +6,11 @@ import (
 	"net/http"
 )
 
-func GetInsumoByIDService(DSN string) gin.HandlerFunc {
+func GetInsumoByIDService() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		c := context
 		id := c.Query("id")
-		insumo, err := Query.SelectInsumoByID(DSN, id)
+		insumo, err := Query.SelectInsumoByID(id)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

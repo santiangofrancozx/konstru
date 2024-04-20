@@ -1,41 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="static/style/styleLogin.css" />
-  </head>
-  <body>
-    <section class="form-login">
-      <form action="/validarLogin" method="post">
-        <h4>Login</h4>
-        <input
-          class="controlsLogin"
-          type="email"
-          name="emailLogin"
-          id="emailLogin"
-          placeholder="Ingrese su Email"
-        />
-        <input
-          class="controlsLogin"
-          type="password"
-          name="passLogin"
-          id="passLogin"
-          placeholder="Ingrese su Contraseña"
-        />
-        <input
-          class="imageLogin"
-          type="image"
-          name="google"
-          id="google"
-          src="static/img/iconGoogle.png"
-        />
-        <br /><br />
-        <input class="botonsLogin" type="submit" value="Ingresar" />
-        <br />
-        <p><a href="/register">No tienes una cuenta?</a></p>
-      </form>
-    </section>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="static/style/styleLogin.css" />
+</head>
+<body>
+<section class="form-login">
+  <form id="loginForm" action="/validateUser" method="POST">
+    <h4>Login</h4>
+    <input
+            class="controlsLogin"
+            type="email"
+            name="emailLogin"
+            id="emailLogin"
+            placeholder="Ingrese su Email"
+    />
+    <input
+            class="controlsLogin"
+            type="password"
+            name="passLogin"
+            id="passLogin"
+            placeholder="Ingrese su Contraseña"
+    />
+    <input
+            class="imageLogin"
+            type="image"
+            name="google"
+            id="google"
+            src="static/img/iconGoogle.png"
+    />
+    <br /><br />
+    <input class="botonsLogin" type="button" value="Ingresar" onclick="searchUser()" />
+    <br />
+    <p><a href="/register">No tienes una cuenta?</a></p>
+  </form>
+</section>
+<script>
+  function searchUser(){
+    const email = document.getElementById("emailLogin").value;
+    const pass = document.getElementById("passLogin").value;
+    const postData = {
+      email: email,
+      pass: pass
+    };
+    fetch('/validateUser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              //return null
+              window.location.replace("/search"); // Redirigir al usuario después de una respuesta exitosa
+            })
+            .catch(error => {
+              // Aquí puedes manejar errores de red u otros errores
+              console.error('There was a problem with the fetch operation:', error);
+            });
+  }
+
+
+</script>
+</body>
 </html>
