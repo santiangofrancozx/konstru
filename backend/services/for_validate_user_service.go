@@ -1,7 +1,7 @@
 package services
 
 import (
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Adapters"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
@@ -22,7 +22,7 @@ func ValidateLoginService() gin.HandlerFunc {
 		}
 
 		// Buscar el usuario por su correo electrónico
-		usuario, err := Query.SelectUserByUsername(requestData.Email)
+		usuario, err := Adapters.SelectUserByUsername(requestData.Email)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al buscar el usuario"})
 			return
@@ -32,10 +32,8 @@ func ValidateLoginService() gin.HandlerFunc {
 		if verifyPassword(usuario.Password, requestData.Pass) {
 
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-				"sub":   usuario.ID,
 				"email": usuario.Email,
-				"name":  usuario.Nombre,
-				"exp":   time.Now().Add(time.Hour * 24 * 30).Unix(),
+				"exp":   time.Now().Add(time.Minute * 15).Unix(),
 			})
 
 			// Sign and get the complete encoded token as a string using the secret

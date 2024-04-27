@@ -1,7 +1,8 @@
 package services
 
 import (
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Adapters"
+	"awesomeKonstru/backend/handlers/Adapters/Queries"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,14 +14,14 @@ type ApusFormatJson struct {
 	Unidad        string
 	PrecioBase    float64
 	FechaCreacion string
-	Insumos       []Query.APUs
+	Insumos       []Queries.APUs
 }
 
 func GetActivityApuByActiityIdService() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ID := c.Query("id")
-		activity, err := Query.SelectActivityByID(ID)
-		apu, err := Query.SelectApuByActivityId(ID)
+		activity, err := Adapters.SelectActivityByID(ID)
+		apu, err := Adapters.SelectApuByActivityId(ID)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

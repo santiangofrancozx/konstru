@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Adapters"
 	"awesomeKonstru/backend/models"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -40,16 +40,25 @@ func RequireAuth(c *gin.Context) {
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		// Chec k the expiry date
 		if float64(time.Now().Unix()) > claims["exp"].(float64) {
-			c.AbortWithStatus(http.StatusUnauthorized)
+			// If the token is about to expire, generate a new token
+			newToken, err := generateToken(claims["email"].(string))
+			if err != nil {
+				fmt.Println("Error generating new token:", err)
+				c.AbortWithStatus(http.StatusInternalServerError)
+				return
+			}
+
+			// Set the new token in the response
+			c.Header("Authorization", "Bearer "+newToken)
 		}
 
 		// Find the user with token Subject
 		var user models.Usuario
-		user, err = Query.SelectUserByUsername(claims["email"].(string))
+		user, err = Adapters.SelectUserByUsername(claims["email"].(string))
 
-		//if user.ID == 0 {
-		//	c.AbortWithStatus(http.StatusUnauthorized)
-		//}
+		if user.ID == 0 {
+			c.AbortWithStatus(http.StatusUnauthorized)
+		}
 
 		// Attach the request
 		c.Set("user", user)
@@ -59,4 +68,21 @@ func RequireAuth(c *gin.Context) {
 	} else {
 		c.AbortWithStatus(http.StatusUnauthorized)
 	}
+}
+
+func generateToken(email string) (string, error) {
+	// Create a new token with updated expiration time
+	expirationTime := time.Now().Add(time.Minute * 15) // Set expiration to 15 minute from now
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"email": email,
+		"exp":   expirationTime.Unix(),
+	})
+
+	// Sign the token with your secret key
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }
