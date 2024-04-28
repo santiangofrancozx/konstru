@@ -1,7 +1,8 @@
 package services
 
 import (
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Adapters"
+	"awesomeKonstru/backend/handlers/Adapters/Queries"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -33,8 +34,8 @@ func GetUserInfoByTokenService() gin.HandlerFunc {
 			if float64(time.Now().Unix()) > claims["exp"].(float64) {
 				c.AbortWithStatus(http.StatusUnauthorized)
 			}
-			var user Query.UserInfo
-			user, err = Query.SelectUserByUsernameInfo(claims["email"].(string))
+			var user Queries.UserInfo
+			user, err = Adapters.SelectUserByUsernameInfo(claims["email"].(string))
 			if err != nil {
 				c.JSON(http.StatusNotFound, nil)
 			}

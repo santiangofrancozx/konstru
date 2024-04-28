@@ -1,7 +1,6 @@
-package Query
+package Queries
 
 import (
-	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"gorm.io/gorm"
 	"time"
@@ -28,12 +27,4 @@ func QueryAPUByActivityID(db *gorm.DB, id string) ([]APUs, error) {
 		return nil, err
 	}
 	return insumos, nil
-}
-
-func SelectApuByActivityId(id string) ([]APUs, error) {
-	db, err := Connection_Migrates.Connect()
-	if err != nil {
-		return nil, err
-	}
-	return QueryAPUByActivityID(db, id)
 }

@@ -1,7 +1,7 @@
 package services
 
 import (
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Adapters"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,7 +13,7 @@ func GetActivityByNameService() gin.HandlerFunc {
 
 		ID := c.Query("id")
 
-		actividades, err := Query.SelectActividadByNombre(ID)
+		actividades, err := Adapters.SelectActividadByNombre(ID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

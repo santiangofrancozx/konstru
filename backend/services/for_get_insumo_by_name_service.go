@@ -1,7 +1,7 @@
 package services
 
 import (
-	"awesomeKonstru/backend/handlers/Query"
+	"awesomeKonstru/backend/handlers/Adapters"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -10,7 +10,7 @@ func GetInsumoByNameService() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		c := context
 		id := c.Query("id")
-		insumos, err := Query.SelectInsumoByNombre(id)
+		insumos, err := Adapters.SelectInsumoByNombre(id)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
