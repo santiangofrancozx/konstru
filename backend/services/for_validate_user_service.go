@@ -2,12 +2,13 @@ package services
 
 import (
 	"awesomeKonstru/backend/handlers/Query"
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func ValidateLoginService() gin.HandlerFunc {

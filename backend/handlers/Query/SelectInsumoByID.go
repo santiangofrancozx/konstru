@@ -1,8 +1,9 @@
 package Query
 
 import (
-	"awesomeKonstru/backend/handlers/Connection-Migrates"
+	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
+
 	"gorm.io/gorm"
 )
 

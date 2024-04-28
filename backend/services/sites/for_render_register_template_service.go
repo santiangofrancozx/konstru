@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RenderLoginTemplateService(c *gin.Context) {
+func RenderRegisterTemplateService(c *gin.Context) {
 	// Definir los datos a pasar al template (si es necesario)
 	data := struct {
 		Title string
@@ -16,7 +16,7 @@ func RenderLoginTemplateService(c *gin.Context) {
 	}
 
 	// Parsear el archivo de template
-	tmpl, err := template.ParseFiles("../frontend/static/templates/login.html")
+	tmpl, err := template.ParseFiles("../frontend/static/templates/registro.html")
 
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())

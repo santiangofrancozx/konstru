@@ -1,8 +1,9 @@
 package Query
 
 import (
-	"awesomeKonstru/backend/handlers/Connection-Migrates"
+	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
+
 	"gorm.io/gorm"
 )
 
@@ -46,7 +47,7 @@ func SelectUserByUsernameInfo(email string) (UserInfo, error) {
 	userF.Email = user.Email
 	userF.Nombre = user.Nombre
 	userF.Apellido = user.Apellido
-	userF.FechaCreacion = user.FechaCreacion
+	userF.FechaCreacion = user.FechaCreacion.String()
 
 	return userF, err
 }

@@ -45,5 +45,35 @@
         <p><a href="/login">Ya tengo Cuenta?</a></p>
       </form>
     </section>
+
+    <script>
+      // Obtener el formulario
+      const formulario = document.getElementById('registroForm');
+
+      // Agregar un controlador de eventos para el evento de envío del formulario
+      formulario.addEventListener('submit', function(event) {
+        // Prevenir el envío automático del formulario
+        event.preventDefault();
+
+        // Realizar cualquier validación o procesamiento adicional aquí
+
+        // Enviar el formulario manualmente
+        enviarFormulario();
+      });
+
+      // Función para enviar el formulario manualmente
+      function enviarFormulario() {
+        // Obtener los datos del formulario
+        const nombres = document.getElementById('nombres').value;
+        const apellidos = document.getElementById('apellidos').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('pass').value;
+
+        // Aquí puedes realizar cualquier validación adicional antes de enviar el formulario
+
+        // Envía el formulario manualmente
+        formulario.submit();
+      }
+    </script>
   </body>
 </html>
