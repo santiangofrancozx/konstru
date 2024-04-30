@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"time"
 )
 
 func SaveCSVInInsumo(route string) {
@@ -42,19 +41,13 @@ func SaveCSVInInsumo(route string) {
 			fmt.Println("Error al convertir la cantidad a float64, asignando 0:", err)
 			quantity = 0
 		}
-		fechaActualizacion, err := time.Parse("02/01/2006", record[4])
-		if err != nil {
-			fmt.Println("Error al asignar la fecha:", err)
-			quantity = 0
-		}
 
 		insert := models.Insumo{
-			ID:                 record[0],
-			Descripcion:        record[1],
-			Unidad:             record[2],
-			PrecioBase:         quantity,
-			FechaActualizacion: fechaActualizacion,
-			Clasificacion:      record[5],
+			ID:            record[0],
+			Descripcion:   record[1],
+			Unidad:        record[2],
+			PrecioBase:    quantity,
+			Clasificacion: record[5],
 		}
 		// Guardar el usuario en la base de datos
 		db.Create(&insert)

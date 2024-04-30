@@ -42,11 +42,10 @@ func SaveCSVInActividad(route string) {
 			quantity = 0
 		}
 		insert := models.Actividad{
-			ID:            record[0],
-			Descripcion:   record[1],
-			Unidad:        record[2],
-			PrecioBase:    quantity,
-			FechaCreacion: "2022-03-25",
+			ID:          record[0],
+			Descripcion: record[1],
+			Unidad:      record[2],
+			PrecioBase:  quantity,
 		}
 		// Guardar el usuario en la base de datos
 		db.Create(&insert)
