@@ -5,6 +5,7 @@ import (
 	"awesomeKonstru/backend/handlers/Adapters/Queries"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 type ApusFormatJson struct {
@@ -13,7 +14,7 @@ type ApusFormatJson struct {
 	Descripcion   string
 	Unidad        string
 	PrecioBase    float64
-	FechaCreacion string
+	FechaCreacion time.Time
 	Insumos       []Queries.APUs
 }
 
@@ -33,7 +34,7 @@ func GetActivityApuByActiityIdService() gin.HandlerFunc {
 			Descripcion:   activity.Descripcion,
 			Unidad:        activity.Unidad,
 			PrecioBase:    activity.PrecioBase,
-			FechaCreacion: activity.FechaCreacion,
+			FechaCreacion: activity.CreatedAt,
 			Insumos:       apu,
 		}
 		c.JSON(http.StatusOK, response)

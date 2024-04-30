@@ -19,7 +19,6 @@ func SelectUserByUsernameInfo(email string) (Queries.UserInfo, error) {
 	userF.Email = user.Email
 	userF.Nombre = user.Nombre
 	userF.Apellido = user.Apellido
-	userF.FechaCreacion = user.FechaCreacion
 
 	return userF, err
 }

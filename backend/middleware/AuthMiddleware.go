@@ -56,7 +56,7 @@ func RequireAuth(c *gin.Context) {
 		var user models.Usuario
 		user, err = Adapters.SelectUserByUsername(claims["email"].(string))
 
-		if user.ID == 0 {
+		if user.ID == "" {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 
