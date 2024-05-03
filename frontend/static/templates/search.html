@@ -4,15 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="static/style/styleSearch.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .popup-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            padding: 20px;
+            position: relative; /* Se agrega posición relativa para el ícono de cerrar */
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<!--
-// v0 by Vercel.
-// https://v0.dev/t/nxO9m6CwG7Z
--->
-
+<!--<div class="popup-overlay hidden" style="display: none;">-->
+<!--    <div class="popup-container rounded-lg border bg-white shadow-sm w-full max-w-4xl">-->
+<!--        <div class="close-icon" onclick="closePopup()">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">-->
+<!--                <line x1="18" y1="6" x2="6" y2="18"/>-->
+<!--                <line x1="6" y1="6" x2="18" y2="18"/>-->
+<!--            </svg>-->
+<!--        </div>-->
+<!--        <div class="flex flex-col space-y-1.5 p-6">-->
+<!--            <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">-->
+<!--                Análisis de Precios Unitarios-->
+<!--            </h3>-->
+<!--            <p class="text-sm text-gray-500 desc">Actividad: Excavación manual</p>-->
+<!--        </div>-->
+<!--        <div class="p-6 grid gap-6">-->
+<!--            <div class="grid grid-cols-2 gap-4">-->
+<!--                <div class="space-y-2">-->
+<!--                    <label class="text-sm font-medium leading-none">-->
+<!--                        Nombre-->
+<!--                    </label>-->
+<!--                    <p class="desc">Excavación manual</p>-->
+<!--                </div>-->
+<!--                <div class="space-y-2">-->
+<!--                    <label class="text-sm font-medium leading-none">-->
+<!--                        Descripción-->
+<!--                    </label>-->
+<!--                    <p>Excavación manual de terreno en cualquier tipo de material, incluido retiro de capa vegetal.</p>-->
+<!--                </div>-->
+<!--                <div class="space-y-2">-->
+<!--                    <label class="text-sm font-medium leading-none">-->
+<!--                        Unidad-->
+<!--                    </label>-->
+<!--                    <p id="unidad">m3</p>-->
+<!--                </div>-->
+<!--                <div class="space-y-2">-->
+<!--                    <label class="text-sm font-medium leading-none">-->
+<!--                        Cantidad-->
+<!--                    </label>-->
+<!--                    <div class="flex items-center gap-2">-->
+<!--                        <input-->
+<!--                                class="flex h-10 w-full rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none"-->
+<!--                                type="number"-->
+<!--                                value="100"-->
+<!--                        />-->
+<!--                        <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border bg-gray-100 text-gray-700 hover:bg-gray-200 h-10 px-4 py-2">-->
+<!--                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">-->
+<!--                                <path d="M5 12h14"></path>-->
+<!--                            </svg>-->
+<!--                            Crear memoria-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="relative w-full overflow-auto">-->
+<!--                <table class="w-full caption-bottom text-sm">-->
+<!--                    <thead class="border-b">-->
+<!--                    <tr>-->
+<!--                        <th class="h-12 px-4 text-left align-middle font-medium text-gray-500">Insumo</th>-->
+<!--                        <th class="h-12 px-4 text-left align-middle font-medium text-gray-500">Cantidad</th>-->
+<!--                        <th class="h-12 px-4 text-left align-middle font-medium text-gray-500">Unidad</th>-->
+<!--                        <th class="h-12 px-4 text-left align-middle font-medium text-gray-500">Precio Unitario</th>-->
+<!--                        <th class="h-12 px-4 text-left align-middle font-medium text-gray-500">Precio Total</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    &lt;!&ndash; Aquí puedes agregar filas de datos si es necesario &ndash;&gt;-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="p-6 flex items-center justify-between">-->
+<!--            <div class="flex items-center gap-2">-->
+<!--                <button class="flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none">-->
+<!--                    <span>Seleccionar capítulo</span>-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">-->
+<!--                        <path d="M6 9 12 15 18 9"></path>-->
+<!--                    </svg>-->
+<!--                </button>-->
+<!--                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border bg-gray-100 text-gray-700 hover:bg-gray-200 h-10 px-4 py-2">-->
+<!--                    Nuevo capítulo-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="flex items-center gap-2">-->
+<!--                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border bg-gray-100 text-gray-700 hover:bg-gray-200 h-10 px-4 py-2">-->
+<!--                    Editar APU-->
+<!--                </button>-->
+<!--                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-blue-500 text-white hover:bg-blue-600 h-10 px-4 py-2">-->
+<!--                    Agregar al presupuesto-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="popup-overlay" id="popupOverlay" style="display: none;">
+    <!-- Contenido del Popup aquí -->
+</div>
 <div class="flex flex-col h-screen w-full">
     <header class="border-b bg-white py-4 dark:bg-gray-950 dark:border-gray-850">
         <div class="container flex items-center gap-4 px-4 md:px-6">
@@ -30,7 +153,7 @@
                     <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
                         New Item
                     </button>
-                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" onclick="generatePopupFromJSON()">
                         New Activity
                     </button>
                 </div>

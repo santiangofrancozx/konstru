@@ -10,15 +10,17 @@ import (
 
 func SetUpRoutes(router *gin.Engine) {
 	r := router
+	//renders
 	r.GET("/login", sites.RenderLoginTemplateService)
+	//user
 	r.POST("/userData", middleware.RequireAuth, services.GetUserInfoByTokenService())
 	r.POST("/validateUser", services.ValidateLoginService())
 	r.POST("/insertNewUser", services.InsertUserService())
-	// Utiliza el middleware para proteger la ruta '/search'
-	r.GET("/search", sites.RenderBudgetTemplateService)
+	// consultas protegidas
+	r.GET("/search", middleware.RequireAuth, sites.RenderBudgetTemplateService)
 	r.GET("/consultaActividad", middleware.RequireAuth, services.GetActivityService())
-	r.GET("/consultaApu", services.GetActivityApuByActiityIdService())
+	r.GET("/consultaApu", middleware.RequireAuth, services.GetActivityApuByActiityIdService())
 	r.GET("/showInfo", middleware.RequireAuth, services.GetUserInfoByTokenService())
 	r.GET("/logout", middleware.RequireAuth, services.LogoutUserByTokenService())
-	r.POST("insertInsumoUsuario", services.InsertNewInsumoUserService())
+	r.POST("/insertInsumoUsuario", middleware.RequireAuth, services.InsertNewInsumoUserService())
 }
