@@ -19,6 +19,12 @@ func MakeMigrations(models []interface{}) error {
 	if err := db.AutoMigrate(models...); err != nil {
 		return fmt.Errorf("error al realizar las migraciones: %v", err)
 	}
+	consultaSQL := "CREATE UNIQUE INDEX unique_actividad_insumo ON actividad_insumos (actividad_id, insumo_id);"
+
+	// Ejecutar la consulta SQL
+	if err := db.Exec(consultaSQL).Error; err != nil {
+		return err
+	}
 	Connection_Migrates.Disconnect(db)
 	return nil
 }
