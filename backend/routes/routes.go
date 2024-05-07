@@ -23,4 +23,5 @@ func SetUpRoutes(router *gin.Engine) {
 	r.GET("/showInfo", middleware.RequireAuth, services.GetUserInfoByTokenService())
 	r.GET("/logout", middleware.RequireAuth, services.LogoutUserByTokenService())
 	r.POST("/insertInsumoUsuario", middleware.RequireAuth, services.InsertNewInsumoUserService())
+	r.POST("/insertActividadUsuario", middleware.RequireAuth, services.InsertNewActivityUserService())
 }

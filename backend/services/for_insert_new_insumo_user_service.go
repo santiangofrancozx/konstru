@@ -14,12 +14,9 @@ type InsumosUsuarioRequest struct {
 	PrecioBase      float64 `json:"precio_base"`
 }
 type InsumosUsuarioResponse struct {
-	ServiceUsed       string  `json:"service-used"`
-	IDInsumoUsuario   string  `json:"id_insumo_usuario"`
-	Descripcion       string  `json:"descripcion"`
-	Unidad            string  `json:"unidad"`
-	PrecioBase        float64 `json:"precio_base"`
-	UsuarioIdentifier string  `json:"usuario_identifier"`
+	ServiceUsed string `json:"service-used"`
+	InsumosUsuarioRequest
+	UsuarioIdentifier string `json:"usuario_identifier"`
 }
 
 func InsertNewInsumoUserService() gin.HandlerFunc {
@@ -47,12 +44,9 @@ func InsertNewInsumoUserService() gin.HandlerFunc {
 
 		// Si no hay error, continuamos con la respuesta exitosa
 		insumoResponse := InsumosUsuarioResponse{
-			ServiceUsed:       "InsertNewInsumoUserService",
-			IDInsumoUsuario:   InsumosUsuarioRequest.IDInsumoUsuario,
-			Descripcion:       InsumosUsuarioRequest.Descripcion,
-			Unidad:            InsumosUsuarioRequest.Unidad,
-			PrecioBase:        InsumosUsuarioRequest.PrecioBase,
-			UsuarioIdentifier: user.Email,
+			ServiceUsed:           "InsertNewInsumoUserService",
+			InsumosUsuarioRequest: InsumosUsuarioRequest,
+			UsuarioIdentifier:     user.Email,
 		}
 		c.JSON(http.StatusOK, insumoResponse)
 	}

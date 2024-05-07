@@ -20,9 +20,12 @@ func MakeMigrations(models []interface{}) error {
 		return fmt.Errorf("error al realizar las migraciones: %v", err)
 	}
 	consultaSQL := "CREATE UNIQUE INDEX unique_actividad_insumo ON actividad_insumos (actividad_id, insumo_id);"
-
+	consultaSQL2 := "CREATE UNIQUE INDEX unique_actividad_insumo_user ON actividadu_insumo_us (actividad_uid, insumo_uid);"
 	// Ejecutar la consulta SQL
 	if err := db.Exec(consultaSQL).Error; err != nil {
+		return err
+	}
+	if err := db.Exec(consultaSQL2).Error; err != nil {
 		return err
 	}
 	Connection_Migrates.Disconnect(db)
