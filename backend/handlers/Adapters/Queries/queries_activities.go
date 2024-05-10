@@ -25,3 +25,9 @@ func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario
 	}
 	return nil
 }
+func InsertInToActivities(db *gorm.DB, activity models.Actividad) error {
+	if err := db.Create(&activity).Error; err != nil {
+		return err
+	}
+	return nil
+}
