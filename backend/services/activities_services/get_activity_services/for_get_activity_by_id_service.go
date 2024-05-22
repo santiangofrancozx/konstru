@@ -1,4 +1,4 @@
-package services
+package get_activity_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -16,7 +16,7 @@ func GetActivityByIdService() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		response := jsonFormat{
+		response := JsonFormat{
 			ServiceUsed: "GetActivityByIdSerive",
 			Data:        actividad,
 		}

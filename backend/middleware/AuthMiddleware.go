@@ -72,7 +72,7 @@ func RequireAuth(c *gin.Context) {
 
 func generateToken(email string) (string, error) {
 	// Create a new token with updated expiration time
-	expirationTime := time.Now().Add(time.Minute * 15) // Set expiration to 15 minute from now
+	expirationTime := time.Now().Add(time.Minute * 30) // Set expiration to 15 minute from now
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email": email,
 		"exp":   expirationTime.Unix(),

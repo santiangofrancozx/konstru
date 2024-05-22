@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+<header class="bg-black text-white py-4 px-6">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center">
+            <img src="../img/logo.jpg" alt="Logo" class="h-8 mr-4" />
+            <span class="text-xl font-bold font-['Roboto']">Awesome Konstru</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <!-- Botón "Actions" -->
+            <button
+                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-black hover:bg-yellow-400 hover:text-black h-10 w-10 rounded-full"
+                    type="button"
+                    id="actions-dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    aria-controls="actions-menu"
+                    onclick="toggleDropdown()"
+            >
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-6 w-6"
+                >
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                </svg>
+                <span class="sr-only">Actions</span>
+            </button>
+            <!-- Lista de opciones desplegable -->
+            <ul
+                    class="hidden bg-white border border-gray-200 rounded-md shadow-lg absolute top-12 right-0 z-10"
+                    id="actions-menu"
+                    aria-labelledby="actions-dropdown"
+            >
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Acción 1</a></li>
+                <li><a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Acción 2</a></li>
+                <!-- Agrega más opciones aquí -->
+            </ul>
+            <button id="navbar-toggle" class="block lg:hidden focus:outline-none" aria-label="Toggle navigation">
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-6 w-6"
+                >
+                    <line x1="4" x2="20" y1="12" y2="12"></line>
+                    <line x1="4" x2="20" y1="6" y2="6"></line>
+                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<script>
+    function toggleDropdown() {
+        var menu = document.getElementById("actions-menu");
+        var button = document.getElementById("actions-dropdown");
+
+        if (menu.classList.contains("hidden")) {
+            menu.classList.remove("hidden");
+            button.setAttribute("aria-expanded", "true");
+        } else {
+            menu.classList.add("hidden");
+            button.setAttribute("aria-expanded", "false");
+        }
+    }
+</script>
+
+
+<main class="container mx-auto my-12 px-4 sm:px-6 lg:px-8 font-['Roboto']">
+    <section class="mb-12">
+        <h1 class="text-3xl font-bold mb-4">Bienvenido a Awesome Konstru</h1>
+        <p class="text-gray-600 mb-6">
+            Nuestra aplicación te ayuda a generar presupuestos de construcción de manera rápida y eficiente.
+        </p>
+        <a class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded" href="#">
+            Crear Nuevo Proyecto
+        </a>
+    </section>
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4">Tus Últimos Proyectos</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold mb-2">Proyecto A</h3>
+                <p class="text-gray-600 mb-4">Estado: En Progreso</p>
+                <p class="text-gray-600">Fecha de Creación: 2023-04-15</p>
+                <div class="mt-4 flex justify-end">
+                    <button
+                            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-black hover:bg-yellow-400 hover:text-black h-10 w-10 rounded-full"
+                            type="button"
+                            id="radix-:r18:"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            data-state="closed"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="h-6 w-6"
+                        >
+                            <circle cx="12.1" cy="12.1" r="1"></circle>
+                        </svg>
+                        <span class="sr-only">Acciones</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold mb-2">Proyecto B</h3>
+                <p class="text-gray-600 mb-4">Estado: Completado</p>
+                <p class="text-gray-600">Fecha de Creación: 2023-03-20</p>
+                <div class="mt-4 flex justify-end">
+                    <button
+                            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-black hover:bg-yellow-400 hover:text-black h-10 w-10 rounded-full"
+                            type="button"
+                            id="radix-:r1a:"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            data-state="closed"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="h-6 w-6"
+                        >
+                            <circle cx="12.1" cy="12.1" r="1"></circle>
+                        </svg>
+                        <span class="sr-only">Acciones</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold mb-2">Proyecto C</h3>
+                <p class="text-gray-600 mb-4">Estado: Pendiente</p>
+                <p class="text-gray-600">Fecha de Creación: 2023-05-01</p>
+                <div class="mt-4 flex justify-end">
+                    <button
+                            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-black hover:bg-yellow-400 hover:text-black h-10 w-10 rounded-full"
+                            type="button"
+                            id="radix-:r1c:"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            data-state="closed"
+                    >
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="h-6 w-6"
+                        >
+                            <circle cx="12.1" cy="12.1" r="1"></circle>
+                        </svg>
+                        <span class="sr-only">Acciones</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-black text-white py-6 px-6 text-center font-['Roboto']">
+    <p>© 2023 Awesome Konstru. Todos los derechos reservados.</p>
+</footer>
+
+</body>
+</html>

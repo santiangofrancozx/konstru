@@ -6,9 +6,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func InsertInToInsumosUsuario(db *gorm.DB, insumoUsuario models.Insumos_Usuario) (bool, error) {
+func InsertInToInsumosUsuario(db *gorm.DB, insumoUsuario models.Insumos_Usuario) error {
 	if err := db.Create(&insumoUsuario).Error; err != nil {
-		return false, err
+		return err
 	}
-	return true, nil
+	return nil
 }

@@ -1,7 +1,8 @@
-package services
+package get_insumo_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
+	"awesomeKonstru/backend/services/activities_services/get_activity_services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -20,7 +21,7 @@ func GetInsumoService() gin.HandlerFunc {
 		}
 
 		insumos = append(insumos, insumo)
-		response := jsonFormat{
+		response := get_activity_services.JsonFormat{
 			ServiceUsed: "GetInsumoService",
 			Data:        insumos,
 		}

@@ -1,4 +1,7 @@
 /* CSS adicional para los cambios */
+
+
+
 @media (max-width: 768px) {
     .flexible-container {
         flex-direction: column;

@@ -2,8 +2,6 @@ package Queries
 
 import (
 	"awesomeKonstru/backend/models"
-	"log"
-
 	"gorm.io/gorm"
 )
 
@@ -24,7 +22,6 @@ func QueryUserByUsername(db *gorm.DB, email string) (models.Usuario, error) {
 
 func QueryInsertNewUser(db *gorm.DB, user *models.Usuario) (bool, error) {
 	if err := db.Create(user).Error; err != nil {
-		log.Println("Exitoso")
 		return false, err
 	}
 

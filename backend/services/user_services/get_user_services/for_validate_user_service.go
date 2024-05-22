@@ -1,4 +1,4 @@
-package services
+package get_user_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -33,7 +33,7 @@ func ValidateLoginService() gin.HandlerFunc {
 
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 				"email": usuario.Email,
-				"exp":   time.Now().Add(time.Minute * 15).Unix(),
+				"exp":   time.Now().Add(time.Minute * 30).Unix(),
 			})
 
 			// Sign and get the complete encoded token as a string using the secret

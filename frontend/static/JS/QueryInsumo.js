@@ -34,7 +34,7 @@ function mostrarResultados(data) {
 
 
 function generateCard(data) {
-    // Crear elementos HTML
+
     const cardContainer = document.createElement('div');
     cardContainer.className = 'rounded-lg border bg-card text-card-foreground shadow-sm';
 
@@ -60,9 +60,10 @@ function generateCard(data) {
 
     const addButton = document.createElement('button');
     addButton.className = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
+    addButton.id = "openPopupButton"
     addButton.textContent = 'Add to budget';
     addButton.onclick = function () {
-        addBudget(data);
+        openPopup(data.ID)
     }
 
     // Construir la estructura de componentes
@@ -123,6 +124,207 @@ function addBudget(data) {
     tbody.appendChild(tr); // Agregar fila a la tabla
 }
 
+function generatePopup(id) {
+    // Crear el contenedor del popup
+    const url = `/consultaApu?id=${id}`;
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            const popupOverlay = document.createElement('div');
+            popupOverlay.className = 'popup-overlay hidden';
+            // popupOverlay.style.display = 'none';
+
+            // Crear el contenedor del contenido del popup
+            const popupContainer = document.createElement('div');
+            popupContainer.className = 'popup-container rounded-lg border bg-white shadow-sm w-full max-w-4xl';
+
+            // Crear el icono de cerrar
+            const closeIcon = document.createElement('div');
+            closeIcon.className = 'close-icon';
+            closeIcon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+    `;
+            closeIcon.addEventListener('click', closePopup);
+
+            // Crear el contenido del popup
+            const popupContent = document.createElement('div');
+            popupContent.className = 'flex flex-col space-y-1.5 p-6';
+
+            const title = document.createElement('h3');
+            title.className = 'whitespace-nowrap text-2xl font-semibold leading-none tracking-tight';
+            title.textContent = 'Análisis de Precios Unitarios';
+
+            const activityDescription = document.createElement('p');
+            activityDescription.className = 'text-sm text-gray-500 desc';
+            activityDescription.textContent = 'Actividad: ' + data.Descripcion;
+
+            popupContent.appendChild(title);
+            popupContent.appendChild(activityDescription);
+
+            // Crear la tabla de contenido
+            const tableContainer = document.createElement('div');
+            tableContainer.className = 'p-6 grid gap-6';
+
+            const tableGrid = document.createElement('div');
+            tableGrid.className = 'grid grid-cols-2 gap-4';
+
+            const labels = ['Unidad', 'Cantidad'];
+            labels.forEach(labelText => {
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'flex flex-col';
+
+                const label = document.createElement('label');
+                label.className = 'text-sm font-medium leading-none';
+                label.textContent = labelText;
+
+                if (labelText === 'Unidad') {
+                    const p = document.createElement('p');
+                    p.id = 'unidad';
+                    p.className = 'text-gray-500';
+                    p.textContent = data.Unidad;
+                    labelDiv.appendChild(label);
+                    labelDiv.appendChild(p);
+                } else if (labelText === 'Cantidad') {
+                    const inputContainer = document.createElement('div');
+                    inputContainer.className = 'flex items-center';
+
+                    const input = document.createElement('input');
+                    input.className = 'flex-1 h-10 rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none';
+                    input.type = 'number';
+
+                    const button = document.createElement('button');
+                    button.className = 'ml-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border bg-gray-100 text-gray-700 hover:bg-gray-200 h-10 px-4 py-2';
+                    //button.onclick = addBudget();
+                    button.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <path d="M5 12h14"></path>
+            </svg>
+            Crear memoria
+        `;
+
+                    inputContainer.appendChild(input);
+                    inputContainer.appendChild(button);
+
+                    labelDiv.appendChild(label);
+                    labelDiv.appendChild(inputContainer);
+                }
+
+                tableGrid.appendChild(labelDiv);
+            });
+
+
+            tableContainer.appendChild(tableGrid);
+
+            const tableWrapper = document.createElement('div');
+            tableWrapper.className = 'relative w-full overflow-auto';
+
+            const table = document.createElement('table');
+            table.className = 'w-full caption-bottom text-sm';
+
+            const thead = document.createElement('thead');
+            thead.className = 'border-b';
+
+            const theadRow = document.createElement('tr');
+            ['Insumo', 'Cantidad', 'Unidad', 'Precio Unitario', 'Precio Total'].forEach(text => {
+                const th = document.createElement('th');
+                th.className = 'h-12 px-4 text-left align-middle font-medium text-gray-500';
+                th.textContent = text;
+                theadRow.appendChild(th);
+            });
+
+            thead.appendChild(theadRow);
+
+            const tbody = document.createElement('tbody');
+            data.Insumos.forEach(insumo => {
+                const row = document.createElement('tr');
+                ['Descripcion', 'Cantidad', 'Unidad', 'PrecioBase'].forEach(attr => {
+                    const td = document.createElement('td');
+                    td.className = 'px-4 py-2 text-gray-800';
+                    td.textContent = insumo[attr]; // Aquí se asume que los atributos del objeto coinciden con los nombres de las cabeceras
+                    row.appendChild(td);
+                });
+                tbody.appendChild(row);
+            });
+
+            // Agregar el tbody a la tabla existente
+            table.appendChild(tbody);
+
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            tableWrapper.appendChild(table);
+
+            tableContainer.appendChild(tableWrapper);
+
+            // Botones
+            const buttonContainerTop = document.createElement('div');
+            buttonContainerTop.className = 'p-6 flex items-center justify-between';
+
+            const selectChapterButton = document.createElement('button');
+            selectChapterButton.className = 'flex h-10 w-full items-center justify-between rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-sm focus:ring-blue-500 focus:border-blue-500 focus:outline-none';
+            selectChapterButton.innerHTML = `
+        <span>Seleccionar capítulo</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+            <path d="M6 9 12 15 18 9"></path>
+        </svg>
+    `;
+
+            const newChapterButton = document.createElement('button');
+            newChapterButton.className = 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border bg-gray-100 text-gray-700 hover:bg-gray-200 h-10 px-4 py-2';
+            newChapterButton.textContent = 'Nuevo capítulo';
+
+            buttonContainerTop.appendChild(selectChapterButton);
+            buttonContainerTop.appendChild(newChapterButton);
+
+            const buttonContainerBottom = document.createElement('div');
+            buttonContainerBottom.className = 'p-6 flex items-center justify-between';
+
+            const editButton = document.createElement('button');
+            editButton.className = 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium border bg-gray-100 text-gray-700 hover:bg-gray-200 h-10 px-4 py-2';
+            editButton.textContent = 'Editar APU';
+
+            const addButton = document.createElement('button');
+            addButton.className = 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium bg-blue-500 text-white hover:bg-blue-600 h-10 px-4 py-2';
+            addButton.textContent = 'Agregar al presupuesto';
+
+            buttonContainerBottom.appendChild(editButton);
+            buttonContainerBottom.appendChild(addButton);
+
+            popupContainer.appendChild(closeIcon);
+            popupContainer.appendChild(popupContent);
+            popupContainer.appendChild(tableContainer);
+            popupContainer.appendChild(buttonContainerTop);
+            popupContainer.appendChild(buttonContainerBottom);
+
+            popupOverlay.appendChild(popupContainer);
+
+            document.body.appendChild(popupOverlay);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
+
+
+// Función para abrir el popup
+function openPopup(data) {
+    generatePopup(data);
+}
+
+// Función para cerrar el popup
+function closePopup() {
+    const popupOverlay = document.querySelector('.popup-overlay');
+    document.body.removeChild(popupOverlay);
+}
 
 
 function downloadXLSX() {
@@ -157,9 +359,6 @@ function downloadXLSX() {
     }, 0);
 }
 
-//
-// // Llama a la función downloadCSV cuando se haga clic en el botón "Download CSV"
-// document.getElementById('downloadButton').addEventListener('click', downloadCSV);
 
 
 

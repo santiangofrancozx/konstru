@@ -19,3 +19,15 @@ func QueryActividadByNombre(db *gorm.DB, nombre string) ([]models.Actividad, err
 	}
 	return items, nil
 }
+func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario) error {
+	if err := db.Create(&activityUser).Error; err != nil {
+		return err
+	}
+	return nil
+}
+func InsertInToActivities(db *gorm.DB, activity models.Actividad) error {
+	if err := db.Create(&activity).Error; err != nil {
+		return err
+	}
+	return nil
+}

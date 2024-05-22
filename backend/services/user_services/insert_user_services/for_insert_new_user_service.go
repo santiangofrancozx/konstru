@@ -1,4 +1,4 @@
-package services
+package insert_user_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -10,7 +10,6 @@ import (
 )
 
 type UsuarioRequest struct {
-	ID       int    `json:"id"`
 	Nombre   string `json:"nombre"`
 	Apellido string `json:"apellido"`
 	Email    string `json:"email"`

@@ -20,3 +20,10 @@ func QueryInsumoByNombre(db *gorm.DB, nombre string) ([]models.Insumo, error) {
 	}
 	return items, nil
 }
+
+func InsertInsumo(db *gorm.DB, insumo models.Insumo) error {
+	if err := db.Create(&insumo).Error; err != nil {
+		return err
+	}
+	return nil
+}
