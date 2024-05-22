@@ -1,4 +1,4 @@
-package services
+package create_activity_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"

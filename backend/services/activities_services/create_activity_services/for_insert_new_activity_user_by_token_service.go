@@ -1,4 +1,4 @@
-package services
+package create_activity_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -26,7 +26,11 @@ func InsertNewActivityUserService() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		user := Adapters.GetUserIdByToken(c)
+		user, err := Adapters.GetUserIdByToken(c)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err})
+			return
+		}
 		activityUpload := models.Actividad_Usuario{
 			ID_Actividad_Usuario: ActivityUserRequest.IDActivityUser,
 			Usuario_ID:           user.ID,

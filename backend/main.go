@@ -2,6 +2,8 @@ package main
 
 import (
 	"awesomeKonstru/backend/config"
+	"net/http"
+
 	//"awesomeKonstru/backend/handlers/Connection-Migrates/Migrates"
 	"awesomeKonstru/backend/routes"
 
@@ -19,9 +21,26 @@ func main() {
 	gin.SetMode(gin.DebugMode) // o gin.ReleaseMode
 	router.Static("/static", "../frontend/static")
 
+	router.Use(corsMiddleware())
+
 	// Configurar las rutas
 	routes.SetUpRoutes(router)
 
 	// Iniciar el servidor
 	router.Run(":8082")
+
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true") // Asegúrate de permitir credenciales
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
+		c.Next()
+	}
 }

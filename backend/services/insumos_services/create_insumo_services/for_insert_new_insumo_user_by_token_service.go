@@ -1,4 +1,4 @@
-package services
+package create_insumo_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -26,7 +26,11 @@ func InsertNewInsumoUserService() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		user := Adapters.GetUserIdByToken(c)
+		user, err := Adapters.GetUserIdByToken(c)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err})
+			return
+		}
 
 		insumoUpload := models.Insumos_Usuario{
 			ID_Insumo_Usuario: InsumosUsuarioRequest.IDInsumoUsuario,

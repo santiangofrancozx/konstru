@@ -1,4 +1,4 @@
-package services
+package insert_user_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"

@@ -6,18 +6,13 @@ import (
 	"awesomeKonstru/backend/models"
 )
 
-func InsertIntoInsumoAdapter(insumo models.Insumo) error {
+func GetUserProjectsByUSerIdAdapter(id string) ([]models.Proyectos, error) {
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
-		return err
+		return []models.Proyectos{}, err
 	}
-
-	errI := Queries.InsertInsumo(db, insumo)
-	if errI != nil {
-		defer Connection_Migrates.Disconnect(db)
-		return errI // Devuelve el error de inserción, no el error de conexión
-	}
-
+	projects, err := Queries.GetProjectsByUserID(db, id)
 	defer Connection_Migrates.Disconnect(db)
-	return nil
+
+	return projects, err
 }
