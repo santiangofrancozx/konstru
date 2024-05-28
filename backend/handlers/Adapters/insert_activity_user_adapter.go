@@ -6,18 +6,18 @@ import (
 	"awesomeKonstru/backend/models"
 )
 
-func InsertIntoActivityUserAdapter(activity models.Actividad_Usuario) error {
+func InsertIntoActivityUserAdapter(activity models.Actividad_Usuario) (error, int) {
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
-		return err
+		return err, -1
 	}
 
-	errI := Queries.InsertInToActivitiesUser(db, activity)
+	errI, id := Queries.InsertInToActivitiesUser(db, activity)
 	if errI != nil {
 		defer Connection_Migrates.Disconnect(db)
-		return errI // Devuelve el error de inserción, no el error de conexión
+		return errI, -1 // Devuelve el error de inserción, no el error de conexión
 	}
 
 	defer Connection_Migrates.Disconnect(db)
-	return nil
+	return nil, id
 }

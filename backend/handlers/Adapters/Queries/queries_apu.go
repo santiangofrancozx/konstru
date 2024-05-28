@@ -28,3 +28,16 @@ func QueryAPUByActivityID(db *gorm.DB, id string) ([]APUs, error) {
 	}
 	return insumos, nil
 }
+
+func QueryInsertNewAPU(db *gorm.DB, apu models.ActividadU_InsumoU) error {
+	if err := db.Create(&apu).Error; err != nil {
+		return err
+	}
+	return nil
+}
+func QueryInsertNewAPUs(db *gorm.DB, apu []models.ActividadU_InsumoU) error {
+	if err := db.Create(&apu).Error; err != nil {
+		return err
+	}
+	return nil
+}

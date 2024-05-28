@@ -5,6 +5,7 @@ import (
 	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 	"fmt"
+	"gorm.io/gorm"
 )
 
 type Migration interface {
@@ -40,7 +41,6 @@ func ExecuteMigrations() []interface{} {
 	modelsToMigrate = append(modelsToMigrate, &models.Insumo{})
 	modelsToMigrate = append(modelsToMigrate, &models.Actividad{})
 	modelsToMigrate = append(modelsToMigrate, &models.ActividadInsumo{})
-	modelsToMigrate = append(modelsToMigrate, &models.Insumos_Usuario{})
 	modelsToMigrate = append(modelsToMigrate, &models.Actividad_Usuario{})
 	modelsToMigrate = append(modelsToMigrate, &models.ActividadU_InsumoU{})
 	modelsToMigrate = append(modelsToMigrate, &models.Proyectos{})
@@ -48,6 +48,37 @@ func ExecuteMigrations() []interface{} {
 
 	return modelsToMigrate
 
+}
+func CreateAdminUser() error {
+	db, err := Connection_Migrates.Connect()
+	if err != nil {
+		return err
+	}
+	defer Connection_Migrates.Disconnect(db)
+
+	// Verificar si el usuario admin ya existe
+	var existingUser models.Usuario
+	if err := db.Where("username = ?", "admin").First(&existingUser).Error; err == nil {
+		// El usuario ya existe, no hacer nada
+		return nil
+	} else if err != gorm.ErrRecordNotFound {
+		// Otro error ocurrió
+		return err
+	}
+
+	// Crear el usuario admin
+	adminUser := models.Usuario{
+		Nombre:   "admin",
+		Apellido: "admin",
+		Password: "admin_password_hash", // Asegúrate de usar un hash de contraseña seguro
+		Email:    "admin@example.com",
+	}
+
+	if err := db.Create(&adminUser).Error; err != nil {
+		return fmt.Errorf("error al crear usuario admin: %v", err)
+	}
+
+	return nil
 }
 
 func ImportDataFromCSVDB() {

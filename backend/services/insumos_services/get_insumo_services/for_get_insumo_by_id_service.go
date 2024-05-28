@@ -2,7 +2,6 @@ package get_insumo_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
-	"awesomeKonstru/backend/services/activities_services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -16,11 +15,8 @@ func GetInsumoByIDService() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		response := activities_services.jsonFormat{
-			ServiceUsed: "GetInsumoByIdService",
-			Data:        insumo,
-		}
-		c.JSON(http.StatusOK, response)
+
+		c.JSON(http.StatusOK, insumo)
 	}
 
 }

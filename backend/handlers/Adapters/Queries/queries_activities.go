@@ -19,11 +19,20 @@ func QueryActividadByNombre(db *gorm.DB, nombre string) ([]models.Actividad, err
 	}
 	return items, nil
 }
-func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario) error {
+func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario) (error, int) {
+	var lastInsertedID int
 	if err := db.Create(&activityUser).Error; err != nil {
-		return err
+		return err, -1
 	}
-	return nil
+	var activityUser2 models.Actividad_Usuario
+	if err := db.Last(&activityUser2).Error; err != nil {
+		// Manejar el error aquí
+		return err, -1
+	} else {
+		lastInsertedID = activityUser2.ID_Actividad_Usuario
+		// Utilizar lastInsertedID
+	}
+	return nil, lastInsertedID
 }
 func InsertInToActivities(db *gorm.DB, activity models.Actividad) error {
 	if err := db.Create(&activity).Error; err != nil {

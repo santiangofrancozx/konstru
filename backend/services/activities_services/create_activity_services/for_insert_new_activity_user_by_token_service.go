@@ -8,10 +8,9 @@ import (
 )
 
 type ActivityUserRequest struct {
-	IDActivityUser string  `json:"IDActivityUser"`
-	Descripcion    string  `json:"descripcion"`
-	Unidad         string  `json:"unidad"`
-	PrecioBase     float64 `json:"precio_base"`
+	Descripcion string  `json:"descripcion"`
+	Unidad      string  `json:"unidad"`
+	PrecioBase  float64 `json:"precio_base"`
 }
 type ActivityUserResponse struct {
 	ServiceUsed string `json:"service-used"`
@@ -32,13 +31,12 @@ func InsertNewActivityUserService() gin.HandlerFunc {
 			return
 		}
 		activityUpload := models.Actividad_Usuario{
-			ID_Actividad_Usuario: ActivityUserRequest.IDActivityUser,
-			Usuario_ID:           user.ID,
-			Descripcion:          ActivityUserRequest.Descripcion,
-			Unidad:               ActivityUserRequest.Unidad,
-			PrecioBase:           ActivityUserRequest.PrecioBase,
+			Usuario_ID:  user.ID,
+			Descripcion: ActivityUserRequest.Descripcion,
+			Unidad:      ActivityUserRequest.Unidad,
+			PrecioBase:  ActivityUserRequest.PrecioBase,
 		}
-		errI := Adapters.InsertIntoActivityUserAdapter(activityUpload)
+		errI, _ := Adapters.InsertIntoActivityUserAdapter(activityUpload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error
