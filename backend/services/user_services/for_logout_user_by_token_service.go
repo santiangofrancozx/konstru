@@ -1,4 +1,4 @@
-package get_user_services
+package user_services
 
 import (
 	"github.com/gin-gonic/gin"

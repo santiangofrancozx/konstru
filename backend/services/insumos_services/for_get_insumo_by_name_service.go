@@ -1,4 +1,4 @@
-package get_insumo_services
+package insumos_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"

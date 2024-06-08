@@ -1,4 +1,4 @@
-package create_activity_services
+package insumos_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -7,44 +7,46 @@ import (
 	"net/http"
 )
 
-type ActivityRequest struct {
+type InsumosRequest struct {
 	ID          string  `json:"ID"`
 	Descripcion string  `json:"descripcion"`
 	Unidad      string  `json:"unidad"`
 	PrecioBase  float64 `json:"precio_base"`
 }
-type ActivityResponse struct {
+type InsumosResponse struct {
 	ServiceUsed string `json:"service-used"`
-	ActivityRequest
+	InsumosRequest
 	//UsuarioIdentifier string `json:"usuario_identifier"`
 }
 
-func InsertNewActivityService() gin.HandlerFunc {
+func InsertNewInsumoService() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var ActivityRequest ActivityRequest
-		if err := c.BindJSON(&ActivityRequest); err != nil {
+		var InsumosRequest InsumosRequest
+		if err := c.BindJSON(&InsumosRequest); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 		//user := Adapters.GetUserIdByToken(c)
-		activityUpload := models.Actividad{
-			ID:          ActivityRequest.ID,
-			Descripcion: ActivityRequest.Descripcion,
-			Unidad:      ActivityRequest.Unidad,
-			PrecioBase:  ActivityRequest.PrecioBase,
+
+		insumoUpload := models.Insumo{
+			ID:          InsumosRequest.ID,
+			Descripcion: InsumosRequest.Descripcion,
+			Unidad:      InsumosRequest.Unidad,
+			PrecioBase:  InsumosRequest.PrecioBase,
 		}
-		errI := Adapters.InsertIntoActivityAdapter(activityUpload)
+
+		errI := Adapters.InsertIntoInsumoAdapter(insumoUpload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error
 		}
 
-		activityResponse := ActivityResponse{
-			ServiceUsed:     "InsertNewActivityService",
-			ActivityRequest: ActivityRequest,
+		// Si no hay error, continuamos con la respuesta exitosa
+		insumoResponse := InsumosResponse{
+			ServiceUsed:    "InsertNewInsumoService",
+			InsumosRequest: InsumosRequest,
 			//UsuarioIdentifier: user.Email,
 		}
-		c.JSON(http.StatusOK, activityResponse)
+		c.JSON(http.StatusOK, insumoResponse)
 	}
-
 }
