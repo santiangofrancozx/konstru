@@ -1,4 +1,4 @@
-package get_activity_services
+package activities_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -25,11 +25,7 @@ func GetActivityService() gin.HandlerFunc {
 		}
 
 		actividades = append(actividades, actividad)
-		response := JsonFormat{
-			ServiceUsed: "GetActivityService",
-			Data:        actividades,
-		}
 
-		c.JSON(http.StatusOK, response)
+		c.JSON(http.StatusOK, actividades)
 	}
 }

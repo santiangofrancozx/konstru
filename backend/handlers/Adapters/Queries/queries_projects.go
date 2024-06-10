@@ -14,8 +14,23 @@ func InsertNewProject(db *gorm.DB, project *models.Proyectos) error {
 
 func GetProjectsByUserID(db *gorm.DB, userID string) ([]models.Proyectos, error) {
 	var proyectos []models.Proyectos
-	if err := db.Where("usuario_id = ?", userID).Find(&proyectos).Error; err != nil {
+	if err := db.Where("usuario_id = ?", userID).Order("created_at desc").Find(&proyectos).Error; err != nil {
 		return nil, err
 	}
 	return proyectos, nil
+}
+
+func GetProjectByID(db *gorm.DB, ID string) (*models.Proyectos, error) {
+	var proyecto models.Proyectos
+	if err := db.Where("id_proyecto = ?", ID).First(&proyecto).Error; err != nil {
+		return nil, err
+	}
+	return &proyecto, nil
+}
+
+func InsertNewProjectActivities(db *gorm.DB, projectActivities []models.Proyectos_actividades) error {
+	if err := db.Create(projectActivities).Error; err != nil {
+		return err
+	}
+	return nil
 }

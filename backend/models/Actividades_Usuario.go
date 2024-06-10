@@ -5,7 +5,7 @@ import (
 )
 
 type Actividad_Usuario struct {
-	ID_Actividad_Usuario string  `gorm:"primaryKey;not null;index"`
+	ID_Actividad_Usuario int     `gorm:"primaryKey;not null;autoIncrement;index"`
 	Usuario_ID           string  `gorm:"size:100;index"`
 	Descripcion          string  `gorm:"size:100;index"`
 	Unidad               string  `gorm:"size:20;not null"`

@@ -49,7 +49,8 @@ func SaveCSVInInsumo(route string) {
 			PrecioBase:    quantity,
 			Clasificacion: record[5],
 		}
-		// Guardar el usuario en la base de datos
+
+		// Guardar los insumos en la base de datos
 		db.Create(&insert)
 	}
 	Connection_Migrates.Disconnect(db)

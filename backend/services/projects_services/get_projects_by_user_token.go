@@ -1,4 +1,4 @@
-package get_project_services
+package projects_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"

@@ -28,3 +28,28 @@ func QueryAPUByActivityID(db *gorm.DB, id string) ([]APUs, error) {
 	}
 	return insumos, nil
 }
+func QueryAPUUserByActivityID(db *gorm.DB, id string) ([]APUs, error) {
+	var insumos []APUs
+	if err := db.
+		Model(&models.ActividadU_InsumoU{}).
+		Select("insumos.*, actividadu_insumo_us.cantidad").
+		Joins("JOIN insumos ON actividadu_insumo_us.insumo_uid = insumos.id").
+		Where("actividadu_insumo_us.actividad_uid = ?", id).
+		Find(&insumos).Error; err != nil {
+		return nil, err
+	}
+	return insumos, nil
+}
+
+func QueryInsertNewAPU(db *gorm.DB, apu models.ActividadU_InsumoU) error {
+	if err := db.Create(&apu).Error; err != nil {
+		return err
+	}
+	return nil
+}
+func QueryInsertNewAPUs(db *gorm.DB, apu []models.ActividadU_InsumoU) error {
+	if err := db.Create(&apu).Error; err != nil {
+		return err
+	}
+	return nil
+}

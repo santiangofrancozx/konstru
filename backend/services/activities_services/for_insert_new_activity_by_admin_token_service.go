@@ -1,4 +1,4 @@
-package create_insumo_services
+package activities_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -7,46 +7,44 @@ import (
 	"net/http"
 )
 
-type InsumosRequest struct {
+type ActivityRequest struct {
 	ID          string  `json:"ID"`
 	Descripcion string  `json:"descripcion"`
 	Unidad      string  `json:"unidad"`
 	PrecioBase  float64 `json:"precio_base"`
 }
-type InsumosResponse struct {
+type ActivityResponse struct {
 	ServiceUsed string `json:"service-used"`
-	InsumosRequest
+	ActivityRequest
 	//UsuarioIdentifier string `json:"usuario_identifier"`
 }
 
-func InsertNewInsumoService() gin.HandlerFunc {
+func InsertNewActivityService() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var InsumosRequest InsumosRequest
-		if err := c.BindJSON(&InsumosRequest); err != nil {
+		var ActivityRequest ActivityRequest
+		if err := c.BindJSON(&ActivityRequest); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 		//user := Adapters.GetUserIdByToken(c)
-
-		insumoUpload := models.Insumo{
-			ID:          InsumosRequest.ID,
-			Descripcion: InsumosRequest.Descripcion,
-			Unidad:      InsumosRequest.Unidad,
-			PrecioBase:  InsumosRequest.PrecioBase,
+		activityUpload := models.Actividad{
+			ID:          ActivityRequest.ID,
+			Descripcion: ActivityRequest.Descripcion,
+			Unidad:      ActivityRequest.Unidad,
+			PrecioBase:  ActivityRequest.PrecioBase,
 		}
-
-		errI := Adapters.InsertIntoInsumoAdapter(insumoUpload)
+		errI := Adapters.InsertIntoActivityAdapter(activityUpload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error
 		}
 
-		// Si no hay error, continuamos con la respuesta exitosa
-		insumoResponse := InsumosResponse{
-			ServiceUsed:    "InsertNewInsumoService",
-			InsumosRequest: InsumosRequest,
+		activityResponse := ActivityResponse{
+			ServiceUsed:     "InsertNewActivityService",
+			ActivityRequest: ActivityRequest,
 			//UsuarioIdentifier: user.Email,
 		}
-		c.JSON(http.StatusOK, insumoResponse)
+		c.JSON(http.StatusOK, activityResponse)
 	}
+
 }

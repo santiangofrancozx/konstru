@@ -1,4 +1,4 @@
-package get_activity_services
+package activities_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
@@ -6,21 +6,19 @@ import (
 	"net/http"
 )
 
-func GetActivityByNameService() gin.HandlerFunc {
-	//DSN := config.DB_DSN
-	return func(context *gin.Context) {
-		c := context
+func GetActivityByIdService() gin.HandlerFunc {
+	return func(c *gin.Context) {
 
 		ID := c.Query("id")
 
-		actividades, err := Adapters.SelectActividadByNombre(ID)
+		actividad, err := Adapters.SelectActivityByID(ID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 		response := JsonFormat{
-			ServiceUsed: "GetActivityByNameService",
-			Data:        actividades,
+			ServiceUsed: "GetActivityByIdSerive",
+			Data:        actividad,
 		}
 		c.JSON(http.StatusOK, response)
 	}
