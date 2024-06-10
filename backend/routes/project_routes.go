@@ -9,5 +9,6 @@ import (
 func SetUpProjectRoutes(router *gin.Engine) {
 	r := router
 	r.POST("/projects/create", middleware.RequireAuth, projects_services.InsertNewProjectService())
+	r.POST("/projects/activities/create", middleware.RequireAuth, projects_services.InsertNewProjectActivitiesService())
 	r.GET("/projects/get", projects_services.GetUserProjectsByTokenService())
 }

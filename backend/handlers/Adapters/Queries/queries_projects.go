@@ -19,3 +19,10 @@ func GetProjectsByUserID(db *gorm.DB, userID string) ([]models.Proyectos, error)
 	}
 	return proyectos, nil
 }
+
+func InsertNewProjectActivities(db *gorm.DB, projectActivities []models.Proyectos_actividades) error {
+	if err := db.Create(projectActivities).Error; err != nil {
+		return err
+	}
+	return nil
+}
