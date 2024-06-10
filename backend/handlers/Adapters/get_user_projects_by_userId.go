@@ -16,3 +16,14 @@ func GetUserProjectsByUSerIdAdapter(id string) ([]models.Proyectos, error) {
 
 	return projects, err
 }
+
+func GetProjectByIdAdapter(id string) (*models.Proyectos, error) {
+	db, err := Connection_Migrates.Connect()
+	if err != nil {
+		return &models.Proyectos{}, err
+	}
+	project, err := Queries.GetProjectByID(db, id)
+	defer Connection_Migrates.Disconnect(db)
+
+	return project, err
+}

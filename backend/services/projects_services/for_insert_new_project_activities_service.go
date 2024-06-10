@@ -39,20 +39,31 @@ func InsertNewProjectActivitiesService() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		//user, err := Adapters.GetUserIdByToken(c)
-		//if err != nil {
-		//	c.JSON(http.StatusUnauthorized, gin.H{"error": err})
-		//	return
-		//}
 
-		var projectUpload []models.Proyectos_actividades
-		for _, activity := range ProyectoActivityRequest.Activities {
-			projectUpload = append(projectUpload, models.Proyectos_actividades{
-				ID_proyecto:  ProyectoActivityRequest.IDProyecto,
-				ID_actividad: activity.ID_actividad,
-				Cantidad:     activity.Cantidad,
-			})
+		//Security fisrt steps, verified project owner
+		project, err := Adapters.GetProjectByIdAdapter(ProyectoActivityRequest.IDProyecto)
+		if err != nil {
+			c.JSON(http.StatusNotFound, "Project not found")
 		}
+
+		user, errU := Adapters.GetUserIdByToken(c)
+		if errU != nil {
+			c.JSON(http.StatusUnauthorized, "User not logged")
+		}
+		var projectUpload []models.Proyectos_actividades
+		if project.UsuarioID == user.ID {
+			for _, activity := range ProyectoActivityRequest.Activities {
+				projectUpload = append(projectUpload, models.Proyectos_actividades{
+					ID_proyecto:  ProyectoActivityRequest.IDProyecto,
+					ID_actividad: activity.ID_actividad,
+					Cantidad:     activity.Cantidad,
+				})
+			}
+		} else {
+			c.JSON(http.StatusBadRequest, "project not found or does not belong to this user")
+			return
+		}
+
 		errI := Adapters.InsertNewProjectActivitiesAdapter(projectUpload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
