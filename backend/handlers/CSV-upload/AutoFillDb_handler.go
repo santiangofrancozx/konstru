@@ -13,11 +13,8 @@ func SaveCSVInTableInsumoActividad(route string) {
 	// Conectar a la base de datos MySQL
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
-		panic("Failed to conect databse")
+		panic("Failed to connect to database")
 	}
-
-	// Migrar el esquema si no se ha hecho
-	//db.AutoMigrate(&models.Actividad{})
 
 	// Abrir archivo CSV
 	file, err := os.Open(route)
@@ -35,17 +32,24 @@ func SaveCSVInTableInsumoActividad(route string) {
 		if err != nil {
 			break
 		}
-		// Crear una instancia de User con los datos del CSV
+		// Convertir la cantidad a float64, si hay error asignar 0
 		quantity, err := strconv.ParseFloat(record[2], 64)
 		if err != nil {
-			panic("Error al convertir la cantidad a float64")
+			fmt.Println("Error al convertir la cantidad a float64, asignando 0:", err)
+			quantity = 0
 		}
+
+		// Buscar la actividad por el ID original
+		var actividad models.Actividad
+		db.Where("original_id = ?", record[0]).First(&actividad)
+
 		insert := models.ActividadInsumo{
-			ActividadID: record[0],
-			InsumoID:    record[1],
-			Cantidad:    quantity,
+			ActividadID:         actividad.ID, // Asigna el nuevo UUID basado en el original_id
+			OriginalActividadID: record[0],    // Guarda el ID original del CSV
+			InsumoID:            record[1],
+			Cantidad:            quantity,
 		}
-		// Guardar el usuario en la base de datos
+		// Guardar la relación actividad-insumo en la base de datos
 		db.Create(&insert)
 	}
 	Connection_Migrates.Disconnect(db)
