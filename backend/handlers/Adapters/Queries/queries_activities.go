@@ -64,3 +64,10 @@ func InsertInToActivities(db *gorm.DB, activity models.Actividad) error {
 	}
 	return nil
 }
+
+func DeleteActivityByID(db *gorm.DB, id string) error {
+	if err := db.Where("id = ?", id).Delete(&models.Actividad{}).Error; err != nil {
+		return err
+	}
+	return nil
+}
