@@ -5,11 +5,22 @@ import (
 	"gorm.io/gorm"
 )
 
-func InsertNewProject(db *gorm.DB, project *models.Proyectos) error {
-	if err := db.Create(project).Error; err != nil {
-		return err
+func InsertNewProject(db *gorm.DB, project *models.Proyectos) (*models.Proyectos, error) {
+	tx := db.Begin()
+	if tx.Error != nil {
+		return nil, tx.Error
 	}
-	return nil
+
+	if err := tx.Create(project).Error; err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		return nil, err
+	}
+
+	return project, nil
 }
 
 func GetProjectsByUserID(db *gorm.DB, userID string) ([]models.Proyectos, error) {
@@ -29,8 +40,19 @@ func GetProjectByID(db *gorm.DB, ID string) (*models.Proyectos, error) {
 }
 
 func InsertNewProjectActivities(db *gorm.DB, projectActivities []models.Proyectos_actividades) error {
-	if err := db.Create(projectActivities).Error; err != nil {
+	tx := db.Begin()
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	if err := tx.Create(&projectActivities).Error; err != nil {
+		tx.Rollback()
 		return err
 	}
+
+	if err := tx.Commit().Error; err != nil {
+		return err
+	}
+
 	return nil
 }

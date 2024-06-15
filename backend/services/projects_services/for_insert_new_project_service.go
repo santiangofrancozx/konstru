@@ -41,19 +41,13 @@ func InsertNewProjectService() gin.HandlerFunc {
 			TipoObra:    ProyectoRequest.TipoObra,
 			UsuarioID:   user.ID,
 		}
-		errI := Adapters.InsertNewProjectAdapter(projectUpload)
+		errI, project := Adapters.InsertNewProjectAdapter(projectUpload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error
 		}
 
-		// Si no hay error, continuamos con la respuesta exitosa
-		ProjectResponse := ProjectResponse{
-			ServiceUsed:     "InsertNewProjectService",
-			ProyectoRequest: ProyectoRequest,
-			UserId:          user.ID,
-		}
-		c.JSON(http.StatusOK, ProjectResponse)
+		c.JSON(http.StatusOK, project)
 
 	}
 

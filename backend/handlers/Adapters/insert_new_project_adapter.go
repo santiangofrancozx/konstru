@@ -6,18 +6,19 @@ import (
 	"awesomeKonstru/backend/models"
 )
 
-func InsertNewProjectAdapter(project models.Proyectos) error {
+func InsertNewProjectAdapter(project models.Proyectos) (error, *models.Proyectos) {
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
-		return err
+		return err, &models.Proyectos{}
 	}
 
-	errI := Queries.InsertNewProject(db, &project)
+	project2, errI := Queries.InsertNewProject(db, &project)
+
 	if errI != nil {
 		defer Connection_Migrates.Disconnect(db)
-		return errI // Devuelve el error de inserción, no el error de conexión
+		return errI, &models.Proyectos{} // Devuelve el error de inserción, no el error de conexión
 	}
 
 	defer Connection_Migrates.Disconnect(db)
-	return nil
+	return nil, project2
 }
