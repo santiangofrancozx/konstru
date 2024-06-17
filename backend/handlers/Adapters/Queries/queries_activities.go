@@ -2,6 +2,7 @@ package Queries
 
 import (
 	"awesomeKonstru/backend/models"
+
 	"gorm.io/gorm"
 )
 

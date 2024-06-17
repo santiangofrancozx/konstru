@@ -2,8 +2,9 @@ package activities_services
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetActivityByIdService() gin.HandlerFunc {

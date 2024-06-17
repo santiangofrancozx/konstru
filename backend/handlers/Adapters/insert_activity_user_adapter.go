@@ -2,7 +2,7 @@ package Adapters
 
 import (
 	"awesomeKonstru/backend/handlers/Adapters/Queries"
-	"awesomeKonstru/backend/handlers/Connection-Migrates"
+	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 	"awesomeKonstru/backend/models"
 )
 

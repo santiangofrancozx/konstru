@@ -7,3 +7,4 @@ type Proyectos_actividades struct {
 	Proyectos    Proyectos `gorm:"foreignKey:ID_proyecto"`
 	Actividad    Actividad `gorm:"foreignKey:ID_actividad"`
 }
+

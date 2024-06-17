@@ -3,6 +3,7 @@ package routes
 import (
 	"awesomeKonstru/backend/middleware"
 	"awesomeKonstru/backend/services/activities_services"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,4 +15,5 @@ func SetUpActivityRoutes(router *gin.Engine) {
 	r.GET("/activities/user/get", activities_services.GetActivitiesService())
 	r.GET("/activities/apu/get", activities_services.GetActivityApuByActiityIdService())
 	r.DELETE("/activities/delete", activities_services.DeleteActivityByIdService())
+
 }
