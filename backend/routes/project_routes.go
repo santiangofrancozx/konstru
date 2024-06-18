@@ -11,4 +11,5 @@ func SetUpProjectRoutes(router *gin.Engine) {
 	r.POST("/projects/create", middleware.RequireAuth, projects_services.InsertNewProjectService())
 	r.POST("/projects/activities/create", middleware.RequireAuth, projects_services.InsertNewProjectActivitiesService())
 	r.GET("/projects/get", projects_services.GetUserProjectsByTokenService())
+	r.GET("/projects/activities/get", projects_services.GetAllProjectsActivitiesService())
 }

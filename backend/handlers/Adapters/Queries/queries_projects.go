@@ -56,3 +56,11 @@ func InsertNewProjectActivities(db *gorm.DB, projectActivities []models.Proyecto
 
 	return nil
 }
+
+func GetAllProjectActivities(db *gorm.DB, idp string) ([]models.Proyectos_actividades, error) {
+	var items []models.Proyectos_actividades
+	if err := db.Where("id_proyecto = ?", idp).Preload("Proyectos").Preload("Actividad").Find(&items).Error; err != nil {
+		return nil, err
+	}
+	return items, nil
+}
