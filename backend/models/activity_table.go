@@ -7,14 +7,15 @@ import (
 )
 
 type Actividad struct {
-	ID               string            `gorm:"primaryKey;not null;index"`
-	OriginalID       string            `gorm:"size:255"`
-	Descripcion      string            `gorm:"size:100;index"`
-	Unidad           string            `gorm:"size:20;not null"`
-	PrecioBase       float64           `gorm:"type:decimal(10,2)"`
-	CreatedBy        *string           `gorm:"size:255"`
-	Usuario          Usuario           `gorm:"foreignKey:CreatedBy"`
-	ActividadInsumos []ActividadInsumo `gorm:"foreignKey:ActividadID;constraint:OnDelete:CASCADE;"`
+	ID                   string                  `gorm:"primaryKey;not null;index"`
+	OriginalID           string                  `gorm:"size:255"`
+	Descripcion          string                  `gorm:"size:100;index"`
+	Unidad               string                  `gorm:"size:20;not null"`
+	PrecioBase           float64                 `gorm:"type:decimal(10,2)"`
+	CreatedBy            *string                 `gorm:"size:255"`
+	Usuario              Usuario                 `gorm:"foreignKey:CreatedBy"`
+	ActividadInsumos     []ActividadInsumo       `gorm:"foreignKey:ActividadID;constraint:OnDelete:CASCADE;"`
+	ProyectosActividades []Proyectos_actividades `gorm:"foreignKey:ID_actividad;constraint:OnDelete:CASCADE;"`
 	Base
 }
 

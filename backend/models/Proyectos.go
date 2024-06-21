@@ -14,8 +14,9 @@ type Proyectos struct {
 	TipoObra    string  `gorm:"type:longtext;size:255"`
 	State       bool    `gorm:"default:true"`
 	Base
-	UsuarioID string  `gorm:"type:longtext;size:255"`
-	Usuario   Usuario `gorm:"foreignKey:UsuarioID"`
+	UsuarioID   string                  `gorm:"type:longtext;size:255"`
+	Usuario     Usuario                 `gorm:"foreignKey:UsuarioID"`
+	Actividades []Proyectos_actividades `gorm:"foreignKey:ID_proyecto;constraint:OnDelete:CASCADE;"`
 }
 
 func (b *Proyectos) BeforeCreate(tx *gorm.DB) (err error) {

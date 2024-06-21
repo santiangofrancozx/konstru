@@ -13,5 +13,6 @@ func SetUpProjectRoutes(router *gin.Engine) {
 	r.GET("/projects/get", projects_services.GetUserProjectsByTokenService())
 	r.GET("/projects/activities/get", projects_services.GetAllProjectsActivitiesService())
 	r.DELETE("/projects/activities/delete", projects_services.DeleteProhectActivitiesService())
+	r.DELETE("/projects/delete", projects_services.DeleteProjectsByProjectIdOnCascade())
 	r.PUT("/projects/activities/update", projects_services.UpdateProjectActivitiesService())
 }

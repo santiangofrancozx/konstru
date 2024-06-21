@@ -56,3 +56,15 @@ func DeleteProhectActivitiesService() gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{"message": "Project activities deleted successfully"})
 	}
 }
+
+func DeleteProjectsByProjectIdOnCascade() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ID := c.Query("id")
+
+		delete := Adapters.DeleteProjectByIdAdapter(ID)
+		if delete != nil {
+			c.JSON(http.StatusInternalServerError, "Error on delete cascade project")
+		}
+		c.JSON(http.StatusOK, gin.H{"message": "Project deleted successfully"})
+	}
+}

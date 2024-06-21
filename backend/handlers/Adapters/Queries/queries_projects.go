@@ -66,6 +66,11 @@ func GetAllProjectActivities(db *gorm.DB, idp string) ([]models.Proyectos_activi
 	return items, nil
 }
 
+func DeleteProjectOnCascade(db *gorm.DB, ID string) error {
+
+	return nil
+}
+
 func DeleteProjectByID(db *gorm.DB, projectID string) error {
 	tx := db.Begin()
 	if tx.Error != nil {

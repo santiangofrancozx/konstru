@@ -17,7 +17,7 @@ func main() {
 	//cambia user por tu usuario de MySql y password por tu contrasenia de acceso a el puerto, por defecto uso 3306
 	Migrates.MakeMigrations(Migrates.ExecuteMigrations())
 	//Migrates.CreateAdminUser() // ejecuta las migraciones crea la db si no existe y las tablas en esta si no existe
-	Migrates.ImportDataFromCSVDB()
+	//Migrates.ImportDataFromCSVDB()
 
 	router := gin.Default()
 	gin.SetMode(gin.DebugMode) // o gin.ReleaseMode
