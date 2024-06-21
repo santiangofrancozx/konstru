@@ -8,4 +8,5 @@ import (
 func SetUpApuRoutes(router *gin.Engine) {
 	r := router
 	r.POST("/apu/create", apu_services.InsertNewApuAndActivityUserService())
+	r.PUT("/apu/update", apu_services.UpdateApuById())
 }
