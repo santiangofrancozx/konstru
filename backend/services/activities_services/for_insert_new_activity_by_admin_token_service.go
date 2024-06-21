@@ -21,6 +21,8 @@ type ActivityResponse struct {
 
 func InsertNewActivityService() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		user, _ := Adapters.GetUserIdByToken(c)
+		ID := user.ID
 		var ActivityRequest ActivityRequest
 		if err := c.BindJSON(&ActivityRequest); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -32,8 +34,9 @@ func InsertNewActivityService() gin.HandlerFunc {
 			Descripcion: ActivityRequest.Descripcion,
 			Unidad:      ActivityRequest.Unidad,
 			PrecioBase:  ActivityRequest.PrecioBase,
+			CreatedBy:   &ID,
 		}
-		errI := Adapters.InsertIntoActivityAdapter(activityUpload)
+		errI, _ := Adapters.InsertIntoActivityAdapter(activityUpload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error

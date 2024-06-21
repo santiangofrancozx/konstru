@@ -12,14 +12,13 @@ func InsertNewUser(user models.Usuario) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	defer Connection_Migrates.Disconnect(db)
+
+	// Llamar a la función QueryInsertNewUser
 	successful, err := Queries.QueryInsertNewUser(db, &user)
 	if err != nil {
 		return false, err
 	}
-
-	defer Connection_Migrates.Disconnect(db)
-
-	// Llamar a la función QueryInsertNewUser
 
 	return successful, nil
 }

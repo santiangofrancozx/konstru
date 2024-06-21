@@ -27,3 +27,10 @@ func QueryInsertNewUser(db *gorm.DB, user *models.Usuario) (bool, error) {
 
 	return true, nil
 }
+
+func QueryDeleteUserByEmail(db *gorm.DB, email string) error {
+	if err := db.Where("email = ?", email).Delete(&models.Usuario{}).Error; err != nil {
+		return err
+	}
+	return nil
+}

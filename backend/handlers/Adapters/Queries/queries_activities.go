@@ -58,15 +58,18 @@ func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario
 	}
 	return nil, lastInsertedID
 }
-func InsertInToActivities(db *gorm.DB, activity models.Actividad) error {
+func InsertInToActivities(db *gorm.DB, activity models.Actividad) (error, string) {
+	// Intentar crear la actividad en la base de datos
 	if err := db.Create(&activity).Error; err != nil {
-		return err
+		return err, "" // Devolver el error y una cadena vacía como ID
 	}
-	return nil
+
+	// El ID de la actividad debería estar actualizado en el modelo 'activity' después de la inserción
+	return nil, activity.ID
 }
 
-func DeleteActivityByID(db *gorm.DB, id string) error {
-	if err := db.Where("id = ?", id).Delete(&models.Actividad{}).Error; err != nil {
+func DeleteActivityByID(db *gorm.DB, id string, creator string) error {
+	if err := db.Where("id = ?", id).Where("created_by = ?", creator).Delete(&models.Actividad{}).Error; err != nil {
 		return err
 	}
 	return nil

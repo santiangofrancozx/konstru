@@ -6,18 +6,17 @@ import (
 	"awesomeKonstru/backend/models"
 )
 
-func InsertIntoActivityAdapter(activity models.Actividad) (error, string) {
+func UpdateProjectActivitiesAdapter(PAmodels []models.Proyectos_actividades, Idproject string) error {
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
-		return err, "nil"
+		return err
 	}
 
-	errI, lastId := Queries.InsertInToActivities(db, activity)
-	if errI != nil {
+	succesful := Queries.UpdateProjectActivities(db, PAmodels, Idproject)
+	if succesful != nil {
 		defer Connection_Migrates.Disconnect(db)
-		return errI, "" // Devuelve el error de inserción, no el error de conexión
+		return succesful
 	}
-
 	defer Connection_Migrates.Disconnect(db)
-	return nil, lastId
+	return nil
 }

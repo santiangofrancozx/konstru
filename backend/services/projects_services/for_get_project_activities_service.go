@@ -8,15 +8,28 @@ import (
 )
 
 type response struct {
-	Nombre   string
-	Cantidad float64
-	Precio   float64
-	Total    float64
+	Descripcion string
+	Cantidad    float64
+	PrecioBase  float64
+	Total       float64
+	ID          string
 }
 
 func GetAllProjectsActivitiesService() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		idp := c.Query("id_proyecto")
+		project, err := Adapters.GetProjectByIdAdapter(idp)
+		if err != nil {
+			c.JSON(http.StatusNotFound, "Project not found")
+		}
+
+		user, errU := Adapters.GetUserIdByToken(c)
+		if errU != nil {
+			c.JSON(http.StatusUnauthorized, "User not logged")
+		}
+		if project.UsuarioID != user.ID {
+			c.JSON(http.StatusUnauthorized, "The project does not belong you")
+		}
 
 		actividadesU, err := Adapters.SelectAllProjectsActivities(idp)
 
@@ -29,10 +42,11 @@ func GetAllProjectsActivitiesService() gin.HandlerFunc {
 			}
 			totalM := actividad2.PrecioBase * actividad.Cantidad
 			response := response{
-				Nombre:   actividad2.Descripcion,
-				Cantidad: actividad.Cantidad,
-				Precio:   actividad2.PrecioBase,
-				Total:    totalM,
+				Descripcion: actividad2.Descripcion,
+				Cantidad:    actividad.Cantidad,
+				PrecioBase:  actividad2.PrecioBase,
+				Total:       totalM,
+				ID:          actividad2.ID,
 			}
 			list = append(list, response)
 		}

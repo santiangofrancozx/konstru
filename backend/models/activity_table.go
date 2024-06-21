@@ -12,6 +12,8 @@ type Actividad struct {
 	Descripcion string  `gorm:"size:100;index"`
 	Unidad      string  `gorm:"size:20;not null"`
 	PrecioBase  float64 `gorm:"type:decimal(10,2)"`
+	CreatedBy   *string `gorm:"size:255"`
+	Usuario     Usuario `gorm:"foreignKey:CreatedBy"`
 	Base
 }
 

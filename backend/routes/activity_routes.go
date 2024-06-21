@@ -9,9 +9,9 @@ import (
 func SetUpActivityRoutes(router *gin.Engine) {
 	r := router
 	r.POST("/activities/create", middleware.RequireAuth, activities_services.InsertNewActivityService())
-	r.POST("/activities/user/create", middleware.RequireAuth, activities_services.InsertNewActivityUserService())
+	//r.POST("/activities/user/create", middleware.RequireAuth, activities_services.InsertNewActivityUserService())
 	r.GET("/activities/get", activities_services.GetActivityService())
-	r.GET("/activities/user/get", activities_services.GetActivitiesService())
+	//r.GET("/activities/user/get", activities_services.GetActivitiesService())
 	r.GET("/activities/apu/get", activities_services.GetActivityApuByActiityIdService())
 	r.DELETE("/activities/delete", activities_services.DeleteActivityByIdService())
 }

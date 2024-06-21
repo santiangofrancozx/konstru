@@ -31,27 +31,36 @@ func InsertNewApuAndActivityUserService() gin.HandlerFunc {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": err})
 			return
 		}
-		Activitypload := models.Actividad_Usuario{
-			Usuario_ID:  user.ID,
+		ID := user.ID
+
+		//Activitypload := models.Actividad_Usuario{
+		//	Usuario_ID:  user.ID,
+		//	Descripcion: InsumoApu.ActivityDescripcion,
+		//	Unidad:      InsumoApu.ActivityUnit,
+		//	PrecioBase:  InsumoApu.ActivityBasePrice,
+		//}
+		Activitypload := models.Actividad{
 			Descripcion: InsumoApu.ActivityDescripcion,
 			Unidad:      InsumoApu.ActivityUnit,
 			PrecioBase:  InsumoApu.ActivityBasePrice,
+			CreatedBy:   &ID,
 		}
-		errI, id := Adapters.InsertIntoActivityUserAdapter(Activitypload)
+		errI, id := Adapters.InsertIntoActivityAdapter(Activitypload)
 		if errI != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errI.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error
 		}
-		var Apus []models.ActividadU_InsumoU
+		var Apus []models.ActividadInsumo
 		for _, value := range InsumoApu.APU {
-			apu := models.ActividadU_InsumoU{
-				ActividadUID: id,
-				InsumoUID:    value.InsumoID,
-				Cantidad:     value.Cantidad,
+			apu := models.ActividadInsumo{
+				ActividadID: id,
+				InsumoID:    value.InsumoID,
+				Cantidad:    value.Cantidad,
 			}
 			Apus = append(Apus, apu)
 		}
 		errA := Adapters.InsertApuUserAdapter(Apus)
+
 		if errA != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": errA.Error()})
 			return // Aquí se detiene la ejecución de la función si hay un error

@@ -6,7 +6,7 @@ import (
 	"awesomeKonstru/backend/models"
 )
 
-func InsertApuUserAdapter(apu []models.ActividadU_InsumoU) error {
+func InsertApuUserAdapter(apu []models.ActividadInsumo) error {
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return err
