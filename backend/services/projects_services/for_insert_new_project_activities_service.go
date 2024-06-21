@@ -19,17 +19,17 @@ type ProyectoActivityRequest struct {
 
 //dump Json postman test
 //{
-//  "id_proyecto": "12345",
-//  "activities": [
-//    {
-//      "ID_actividad": "A1",
-//      "cantidad": 100.5
-//    },
-//    {
-//      "ID_actividad": "A2",
-//      "cantidad": 200.75
-//    }
-//  ]
+// "id_proyecto": "12345",
+// "activities": [
+//   {
+//     "ID_actividad": "A1",
+//     "cantidad": 100.5
+//   },
+//   {
+//     "ID_actividad": "A2",
+//     "cantidad": 200.75
+//   }
+// ]
 //}
 
 func InsertNewProjectActivitiesService() gin.HandlerFunc {

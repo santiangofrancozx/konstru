@@ -42,7 +42,7 @@ func SaveCSVInActividad(route string) {
 			quantity = 0
 		}
 		insert := models.Actividad{
-			ID:          record[0],
+			OriginalID:  record[0],
 			Descripcion: record[1],
 			Unidad:      record[2],
 			PrecioBase:  quantity,

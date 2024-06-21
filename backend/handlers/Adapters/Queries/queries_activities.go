@@ -42,6 +42,13 @@ func QueryActividadUserById(db *gorm.DB, idu string, id string) (models.Activida
 	}
 	return item, nil
 }
+func QueryActivityByOwnerID(db *gorm.DB, id string) ([]models.Actividad, error) {
+	var items []models.Actividad
+	if err := db.Where("created_by = ?", id).Find(&items).Error; err != nil {
+		return []models.Actividad{}, err
+	}
+	return items, nil
+}
 
 func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario) (error, int) {
 	var lastInsertedID int
@@ -58,16 +65,39 @@ func InsertInToActivitiesUser(db *gorm.DB, activityUser models.Actividad_Usuario
 	}
 	return nil, lastInsertedID
 }
-func InsertInToActivities(db *gorm.DB, activity models.Actividad) error {
+func InsertInToActivities(db *gorm.DB, activity models.Actividad) (error, string) {
+	// Intentar crear la actividad en la base de datos
 	if err := db.Create(&activity).Error; err != nil {
+		return err, "" // Devolver el error y una cadena vacía como ID
+	}
+
+	// El ID de la actividad debería estar actualizado en el modelo 'activity' después de la inserción
+	return nil, activity.ID
+}
+
+func DeleteActivityByID(db *gorm.DB, id string, creator string) error {
+	if err := db.Where("id = ?", id).Where("created_by = ?", creator).Delete(&models.Actividad{}).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func DeleteActivityByID(db *gorm.DB, id string) error {
-	if err := db.Where("id = ?", id).Delete(&models.Actividad{}).Error; err != nil {
-		return err
+func UpdateActividad(db *gorm.DB, actividad models.Actividad) error {
+	// Buscar la actividad por su ID
+	var existingActividad models.Actividad
+	if err := db.Where("id = ?", actividad.ID).First(&existingActividad).Error; err != nil {
+		return err // Manejar el error si no se encuentra la actividad
 	}
+
+	// Actualizar los campos necesarios
+	existingActividad.Descripcion = actividad.Descripcion
+	existingActividad.Unidad = actividad.Unidad
+	existingActividad.PrecioBase = actividad.PrecioBase
+
+	// Guardar los cambios en la base de datos
+	if err := db.Save(&existingActividad).Error; err != nil {
+		return err // Manejar el error si falla el guardado
+	}
+
 	return nil
 }

@@ -11,8 +11,14 @@ func DeleteActivityByIdService() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		activityId := c.Query("id")
 
-		err := Adapters.ActivityByID(activityId)
+		user, err := Adapters.GetUserIdByToken(c)
 		if err != nil {
+			c.JSON(http.StatusUnauthorized, "No tienes autorizacion")
+			return
+		}
+
+		err2 := Adapters.ActivityByID(activityId, user.ID)
+		if err2 != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al eliminar la actividad"})
 			return
 		}

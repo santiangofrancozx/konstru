@@ -12,6 +12,8 @@ type Insumo struct {
 	Unidad        string  `gorm:"size:20"`
 	PrecioBase    float64 `gorm:"type:decimal(10,2)"`
 	Clasificacion string  `gorm:"size:50;index"`
+	CreatedBy     *string `gorm:"size:255"`
+	Usuario       Usuario `gorm:"foreignKey:CreatedBy"`
 	Base
 }
 

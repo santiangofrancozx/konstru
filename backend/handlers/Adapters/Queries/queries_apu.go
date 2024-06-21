@@ -41,13 +41,40 @@ func QueryAPUUserByActivityID(db *gorm.DB, id string) ([]APUs, error) {
 	return insumos, nil
 }
 
-func QueryInsertNewAPU(db *gorm.DB, apu models.ActividadU_InsumoU) error {
+func QueryInsertNewAPUs(db *gorm.DB, apu []models.ActividadInsumo) error {
 	if err := db.Create(&apu).Error; err != nil {
 		return err
 	}
 	return nil
 }
-func QueryInsertNewAPUs(db *gorm.DB, apu []models.ActividadU_InsumoU) error {
+
+func DeleteAPUByID(db *gorm.DB, id string) error {
+	// Iniciar una transacción
+	tx := db.Begin()
+	if tx.Error != nil {
+		return tx.Error // Manejar el error si no se puede iniciar la transacción
+	}
+
+	// Deferir la función para hacer rollback si hay un error
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback() // Hacer rollback si hay un error panicking
+		} else if r != nil {
+			tx.Rollback() // Hacer rollback si hay un error normal
+		} else {
+			tx.Commit() // Confirmar la transacción si no hay errores
+		}
+	}()
+
+	// Eliminar los registros relacionados
+	if err := tx.Where("actividad_id = ?", id).Delete(&models.ActividadInsumo{}).Error; err != nil {
+		return err // Retornar el error si falla la eliminación
+	}
+
+	return nil // Retornar nil si todo se realiza correctamente
+}
+
+func QueryInsertNewAPUsUser(db *gorm.DB, apu []models.ActividadU_InsumoU) error {
 	if err := db.Create(&apu).Error; err != nil {
 		return err
 	}

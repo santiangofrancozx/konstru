@@ -5,12 +5,11 @@ import (
 	Connection_Migrates "awesomeKonstru/backend/handlers/Connection-Migrates"
 )
 
-func ActivityByID(id string, creator string) error {
+func DeleteProjectByIdAdapter(id string) error {
 	db, err := Connection_Migrates.Connect()
 	if err != nil {
 		return err
 	}
 	defer Connection_Migrates.Disconnect(db)
-
-	return Queries.DeleteActivityByID(db, id, creator)
+	return Queries.DeleteProjectByID(db, id)
 }

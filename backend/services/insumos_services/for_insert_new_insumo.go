@@ -26,13 +26,15 @@ func InsertNewInsumoService() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		//user := Adapters.GetUserIdByToken(c)
+		user, _ := Adapters.GetUserIdByToken(c)
+		ID := user.ID
 
 		insumoUpload := models.Insumo{
 			ID:          InsumosRequest.ID,
 			Descripcion: InsumosRequest.Descripcion,
 			Unidad:      InsumosRequest.Unidad,
 			PrecioBase:  InsumosRequest.PrecioBase,
+			CreatedBy:   &ID,
 		}
 
 		errI := Adapters.InsertIntoInsumoAdapter(insumoUpload)
