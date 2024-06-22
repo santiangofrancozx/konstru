@@ -14,7 +14,6 @@ Para la instalacion del front vaya a el repositorio:
 Para instalar Chocolatey, ejecuta el siguiente script en PowerShell con permisos de administrador:
 
 ```powershell
-powershellCopy code
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -26,7 +25,6 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocola
 Una vez que Chocolatey esté instalado, instala Git con el siguiente comando:
 
 ```powershell
-powershellCopy code
 choco install git
 
 ```
@@ -36,7 +34,6 @@ choco install git
 Para instalar Golang, utiliza el siguiente comando:
 
 ```powershell
-powershellCopy code
 choco install golang
 
 ```
@@ -46,7 +43,6 @@ choco install golang
 Para instalar MySQL, ejecuta el siguiente comando:
 
 ```powershell
-powershellCopy code
 choco install mysql
 
 ```
@@ -56,7 +52,6 @@ choco install mysql
 Dirígete al directorio raíz de tu proyecto backend y ejecuta:
 
 ```bash
-bashCopy code
 go mod tidy
 
 ```
@@ -68,7 +63,6 @@ Esto descargará y limpiará las dependencias necesarias para el proyecto Go.
 Dirígete al directorio raíz de tu proyecto frontend y ejecuta:
 
 ```bash
-bashCopy code
 npm install
 
 ```
