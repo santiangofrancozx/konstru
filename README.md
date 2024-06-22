@@ -101,3 +101,9 @@ goCopy code
 ```
 
 Descoméntala para ejecutar la carga de estos datos de prueba.
+
+La base de datos se ejecuta con modelos de gorm, para las migraciones es la linea:
+```
+  Migrates.MakeMigrations(Migrates.ExecuteMigrations())
+```
+Esta linea ejecutara las migraciones de los modelos
